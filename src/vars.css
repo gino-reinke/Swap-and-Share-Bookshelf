@@ -1,0 +1,11 @@
+:root {
+    /* Colors */
+    --color-text: #000000;
+    --color-primary: #D32F2F;
+    --color-secondary: #303137;
+    --color-bg: #ffffff;
+
+    /* Fonts */
+    --font-raleway: 'Raleway', sans-serif;
+    --font-dmsans: 'DM Sans', sans-serif;
+}
