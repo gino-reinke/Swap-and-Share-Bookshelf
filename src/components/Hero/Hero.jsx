@@ -1,33 +1,20 @@
 import React, { useRef } from 'react'
+import styles from './Hero.module.css'
+import { getImageUrl } from '../../utils'
+
 import { firestore } from '../../firebase'
 import { addDoc, collection } from 'firebase/firestore'
 
 export const Hero = () => {
-    const messageRef = useRef();
-    const ref = collection(firestore, 'messages');
-
-    const handleSave = async(e) => {
-        e.preventDefault();
-        console.log(messageRef.current.value);
-
-        let data = {
-            message: messageRef.current.value,
-        }
-
-        try {
-            addDoc(ref, data);
-        }
-        catch (e) {
-            console.error("Error adding document: ", e);
-        }
-    };
-  return (
-    <div>
-        <form onSubmit={handleSave}>
-            <label>Enter message</label>
-            <input type="text" ref={messageRef} />
-            <button type="submit">Save</button>
-        </form>
-    </div>
-  )
-}
+    return (
+      <section className={styles.container}>
+          <div className={styles.content}>
+              <h1 className={styles.title}>SWAP AND SHARE BOOKSHELF</h1>
+              <p className={styles.description}>Swap and Share Bookshelf connects readers to trade books effortlessly and reduce waste in a sustainable, community-driven way.</p>
+              <a href="" className={styles.exploreBtn}>Explore Now</a>
+          </div>
+          <img src={getImageUrl("hero/littleLibrary.png")} alt="Little Library Image" className={styles.heroImg}/>
+      </section>
+    )
+  }
+  
