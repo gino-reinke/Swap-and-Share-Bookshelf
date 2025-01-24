@@ -3,9 +3,9 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 import '@fontsource/raleway'; /* Defaults to 400 weight */
-import '@fontsource/raleway/700.css'; /* bold weight */
+import '@fontsource/raleway/800.css'; /* bold weight */
 import '@fontsource/dm-sans'; /* Defaults to 400 weight */
-import '@fontsource/dm-sans/700.css';
+import '@fontsource/dm-sans/800.css';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
