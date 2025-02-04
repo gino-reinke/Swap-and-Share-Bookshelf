@@ -1,17 +1,17 @@
 import styles from '../App.module.css'
 import { Navbar } from '../components/Navbar/Navbar'
-import { Login } from '../components/Login/Login'
+import { Signup } from '../components/Signup/Signup'
 import "../vars.css"
 
 
-function LoginPage() {
+function SignupPage() {
   return <div className={styles.App}>
     <Navbar />
-    <Login />
+    <Signup />
   </div>
   
 }
 
-export default LoginPage
+export default SignupPage
 
 

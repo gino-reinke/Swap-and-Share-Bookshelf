@@ -1,17 +1,16 @@
 import styles from '../App.module.css'
+import { Messaging } from '../components/Messaging/Messaging'
 import { Navbar } from '../components/Navbar/Navbar'
-import { Login } from '../components/Login/Login'
-import "../vars.css"
 
 
-function LoginPage() {
+function MessagingPage() {
   return <div className={styles.App}>
     <Navbar />
-    <Login />
+    <Messaging />
   </div>
   
 }
 
-export default LoginPage
+export default MessagingPage
 
 

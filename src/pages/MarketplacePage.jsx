@@ -1,17 +1,17 @@
 import styles from '../App.module.css'
 import { Navbar } from '../components/Navbar/Navbar'
-import { Login } from '../components/Login/Login'
+import { Marketplace } from '../components/Marketplace/Marketplace'
 import "../vars.css"
 
 
-function LoginPage() {
+function MarketplacePage() {
   return <div className={styles.App}>
     <Navbar />
-    <Login />
+    <Marketplace />
   </div>
   
 }
 
-export default LoginPage
+export default MarketplacePage
 
 

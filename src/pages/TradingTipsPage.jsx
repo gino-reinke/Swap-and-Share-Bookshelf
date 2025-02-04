@@ -1,17 +1,14 @@
 import styles from '../App.module.css'
+import { TradingTips } from '../components/TradingTips/TradingTips'
 import { Navbar } from '../components/Navbar/Navbar'
-import { Login } from '../components/Login/Login'
-import "../vars.css"
 
 
-function LoginPage() {
+function TradingTipsPage() {
   return <div className={styles.App}>
     <Navbar />
-    <Login />
+    <TradingTips />
   </div>
   
 }
 
-export default LoginPage
-
-
+export default TradingTipsPage
