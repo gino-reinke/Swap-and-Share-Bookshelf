@@ -1,9 +1,11 @@
-import React, {useState} from 'react'
-import styles from './Navbar.module.css'
-import { getImageUrl } from '../../utils'
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';  // Import useNavigate
+import styles from './Navbar.module.css';
+import { getImageUrl } from '../../utils';
 
 export const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const navigate = useNavigate(); // Initialize navigate function
 
   return (
     <nav className={styles.navbar}>
@@ -34,11 +36,16 @@ export const Navbar = () => {
             <li className={styles.icons}>
               <img src={getImageUrl("nav/heart.png")} alt="heart" className={styles.icon} />
               <img src={getImageUrl("nav/inbox.png")} alt="inbox" className={styles.icon} />
-              <img src={getImageUrl("nav/account.png")} alt="account" className={styles.icon} />
+              <img 
+                src={getImageUrl("nav/account.png")} 
+                alt="account" 
+                className={styles.icon} 
+                onClick={() => navigate('/signin')} // Navigate to Login page
+                style={{ cursor: "pointer" }} // Make it clear it's clickable
+              />
             </li>
         </ul>
       </div>
     </nav>
-    )
-
-}
+  );
+};

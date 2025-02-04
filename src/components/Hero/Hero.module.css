@@ -17,6 +17,7 @@
   align-items: flex-start;
   color: var(--color-text);
   z-index: 1;
+  width: 85%; /* Adjust the width so it balances with the image */
 }
 
 .title {
@@ -79,15 +80,24 @@
 @media screen and (max-width: 830px) {
   .container {
     flex-direction: column-reverse;
-    margin-left: 10%;
-    margin-right: 10%;
+    align-items: center;
+    text-align: center;
+  }
+
+  .heroImg {
+    width: 70%; /* Make the image more responsive */
   }
 
   .content {
     align-items: center;
+    width: 100%;
   }
 
   .exploreBtn {
     margin-top: 20px;
+  }
+
+  .description {
+    margin-right: 0%;
   }
 }

@@ -1,13 +1,7 @@
-import styles from './App.module.css'
-import { Hero } from './components/Hero/Hero'
-import { Navbar } from './components/Navbar/Navbar'
+import AppRoutes from "./routes/Routes";
 
 function App() {
-  return <div className={styles.App}>
-    <Navbar />
-    <Hero />
-  </div>
-  
+  return <AppRoutes />;
 }
 
-export default App
+export default App;
