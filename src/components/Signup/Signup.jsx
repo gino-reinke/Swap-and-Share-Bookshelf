@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import styles from './Signup.module.css';
+import { useNavigate, Link } from 'react-router-dom';
 import { getImageUrl } from '../../utils';
 
 export const Signup = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [username, setUsername] = useState('');
 
     return (
         <section className={styles.container}>
             {/* Move the image div to the left */}
             <img 
-                src={getImageUrl("login/loginLibrary.png")} 
+                src={getImageUrl("signup/signupLibrary.png")} 
                 alt="Little Library Image" 
                 className={styles.heroImg}
             />
@@ -34,6 +36,17 @@ export const Signup = () => {
                 </div>
 
                 <div className={styles.inputContainer}>
+                    <label className={styles.label}>Username</label>
+                    <input
+                        type="username"
+                        placeholder="username"
+                        value={username}
+                        onChange={(event) => setUsername(event.target.value)}
+                        className={styles.input}
+                    />
+                </div>
+
+                <div className={styles.inputContainer}>
                     <label className={styles.label}>Password</label>
                     <input
                         type="password"
@@ -47,7 +60,7 @@ export const Signup = () => {
                 <button className={styles.loginBtn}>Create Account</button>
 
                 <p className={styles.registerPrompt}>
-                    New to Swap & Share Bookshelf? <a href="#">Create an Account</a>
+                Already have an account? <a href="/signin">Sign in</a>
                 </p>
 
             </div>

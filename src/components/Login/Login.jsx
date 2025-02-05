@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styles from './Login.module.css';
+import { useNavigate, Link } from 'react-router-dom';
 import { getImageUrl } from '../../utils';
 
 export const Login = () => {
@@ -47,7 +48,7 @@ export const Login = () => {
                 <button className={styles.loginBtn}>Login</button>
 
                 <p className={styles.registerPrompt}>
-                    New to Swap & Share Bookshelf? <a href="#">Create an Account</a>
+                    New to Swap & Share Bookshelf? <a href="/signup">Create an Account</a>
                 </p>
 
             </div>
