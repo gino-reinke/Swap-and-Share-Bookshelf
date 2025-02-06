@@ -5,6 +5,7 @@ import Marketplace from "../pages/MarketplacePage";
 import Signup from "../pages/SignupPage";
 import About from "../pages/AboutPage";
 import TradingTips from "../pages/TradingTipsPage";
+import Account from "../pages/AccountPage";
 
 
 const AppRoutes = () => {
@@ -17,6 +18,7 @@ const AppRoutes = () => {
         <Route path="/about" element={<About />} />
         <Route path="/tradingtips" element={<TradingTips />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/profile" element={<Account />} />
       </Routes>
     </Router>
   );

@@ -1,7 +1,57 @@
 @import "../../vars.css";
 
-.container {
-    position: relative;
-    display: flex;
+* {
+  font-family: var(--font-dmsans);
+}
 
-  }
+.container {
+  display: flex;
+  flex-direction: row; /* one row */
+  align-items: center; /* Align items vertically */
+  justify-content: space-between; /* space evenly */
+  padding: 20px;
+  background: #FFFFFF;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.header {
+  display: flex;
+  flex-direction: row; /* Ensure content elements stay in a row */
+  align-items: center;
+  justify-content: space-between;
+  flex-grow: 1;
+  width: 85%;
+}
+
+.title {
+  font-size: 40px;
+  font-weight: bold;
+  margin-right: 20px;
+  font-family: var(--font-raleway);
+}
+
+.buttonContainer {
+  display: flex;
+  gap: 15px; /* Ensures spacing between buttons */
+}
+
+.exploreBtn, .filterBtn {
+  width: 150px;
+  padding: 10px 15px;
+  border-radius: 20px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.exploreBtn {
+  background-color: #D32F2F;
+  color: white;
+}
+
+.filterBtn {
+  background-color: white;
+  border: 1px solid #D32F2F;
+  color: #D32F2F;
+}

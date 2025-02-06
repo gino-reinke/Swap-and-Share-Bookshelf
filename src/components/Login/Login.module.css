@@ -86,6 +86,10 @@
   max-width: 400px; /* Keeps button size consistent */
 }
 
+.loginBtn:hover {
+  background-color: var(--color-text);
+}
+
 .registerPrompt {
   margin-top: 20px;
   font-size: 16px;
