@@ -35,9 +35,9 @@ button {
     color: white;
     border: none;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 10px;
 }
 
 button:hover {
-    background: #003399;
-}
+    background-color: var(--color-darkgray);
+  }
