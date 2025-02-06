@@ -3,160 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Swap and Share Bookshelf</title>
-    <link rel="stylesheet" href="src/index.css">
+    <title>Swap & Share Bookshelf</title>
+    <link rel="stylesheet" href="Homepage.css">
 </head>
 <body>
 
-    <!-- Header Section -->
+    <!-- Header -->
     <header>
-        <div class="container">
-            <div class="logo">
-                <h1>SWAP AND SHARE BOOKSHELF</h1>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#how-it-works">How It Works</a></li>
-                    <li><a href="#browse-books">Browse Books</a></li>
-                    <li><a href="register.html">Register/Login</a></li>
-                    <li><a href="contact.html">Contact Us</a></li>
-                </ul>
-            </nav>
+        <div class="logo">Logo Here</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#">Marketplace</a></li>
+                <li><a href="#">Trading Tips</a></li>
+                <li><a href="#">About</a></li>
+            </ul>
+        </nav>
+        <div class="search-bar">
+            <input type="text" placeholder="Search">
         </div>
     </header>
 
     <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="container">
-            <h2>Swap Books, Share Stories</h2>
-            <p>Welcome to Swap Books, Share Stories – a vibrant community where books find new homes, and stories are shared across generations. Whether you're looking to discover a hidden gem or pass along a beloved favorite, our platform makes it easy to swap books with fellow readers who share your passion for literature. Join us in fostering a love for reading, building connections, and sharing the stories that have shaped our lives. Let's swap, share, and inspire each other, one book at a time!
-			
-			</p>
-			
-			<P> At Swap Books, Share Stories, we believe that books are more than just pages and ink – they are gateways to new worlds, ideas, and perspectives. Our platform is designed to make book swapping simple, enjoyable, and accessible for everyone. Whether you're an avid reader looking to refresh your bookshelf or someone just starting their literary journey, we provide a space to exchange books, connect with fellow readers, and discover stories that resonate. By sharing books, we not only spread knowledge and creativity but also foster a sense of community where each swap enriches our collective experience. Join us today, and let’s keep the stories flowing! </P>
-            <a href="profile.html" class="cta-btn">Get Started</a>
+    <section class="hero">
+        <div class="hero-text">
+            <h1>SWAP AND SHARE BOOKSHELF</h1>
+            <p>Swap and Share Bookshelf connects readers to trade books effortlessly and reduce waste in a sustainable, community-driven way.</p>
+            <a href="#" class="btn">Explore Now</a>
         </div>
+        <img src="3.png" alt="Bookshelf">
     </section>
 
-    <!-- How It Works Section -->
-    <section id="how-it-works" class="how-it-works">
-        <div class="container">
-            <h2>How It Works</h2>
-            <div class="steps">
-                <div class="step">
-                    <h3>Step 1: Create Your Profile</h3>
-                    <p>Register and create a personalized bookshelf.</p>
-                </div>
-                <div class="step">
-                    <h3>Step 2: List Your Books</h3>
-                    <p>Add books you own and those you wish to trade.</p>
-                </div>
-                <div class="step">
-                    <h3>Step 3: Find a Match</h3>
-                    <p>Our system suggests trades based on your book inventory and wishlist.</p>
-                </div>
-                <div class="step">
-                    <h3>Step 4: Make the Swap</h3>
-                    <p>Communicate with other users and complete the trade. Rate the transaction to build trust.</p>
-                </div>
+    <!-- Books Section -->
+    <section class="books-section">
+        <h2>Books Available in Your Area</h2>
+        <div class="books-container">
+            <div class="book-card">
+                <div class="book-img"></div>
+                <h3>Book 01</h3>
+                <p>Book Description...</p>
+                <a href="#" class="btn">More details</a>
+            </div>
+            <div class="book-card">
+                <div class="book-img"></div>
+                <h3>Book 02</h3>
+                <p>Book Description...</p>
+                <a href="#" class="btn">More details</a>
+            </div>
+            <div class="book-card">
+                <div class="book-img"></div>
+                <h3>Book 03</h3>
+                <p>Book Description...</p>
+                <a href="#" class="btn">More details</a>
             </div>
         </div>
     </section>
 
-    <!-- Featured Books Section -->
-    <section id="browse-books" class="featured-books">
-        <div class="container">
-            <h2>Featured Books</h2>
-            <div class="book-carousel">
-                
-                <div class="book">
-                    <img src="book2.jpg" alt="Book 2">
-                    <h3>Book Title 2</h3>
-                    <p>Author: Author 2</p>
-                    <a href="#" class="request-trade-btn">Request Trade</a>
-                </div>
-				 <div class="book">
-                    <img src="book2.jpg" alt="Book 2">
-                    <h3>Book Title 2</h3>
-                    <p>Author: Author 2</p>
-                    <a href="#" class="request-trade-btn">Request Trade</a>
-                </div>
-                <div class="book">
-                    <img src="book3.jpg" alt="Book 3">
-                    <h3>Book Title 3</h3>
-                    <p>Author: Author 3</p>
-                    <a href="#" class="request-trade-btn">Request Trade</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Why Swap Books? Section -->
-    <section class="why-swap">
-        <div class="container">
-            <h2>Why Swap Books?</h2>
-            <ul>
-                <li><strong>Save Money:</strong> No need to buy new books, just swap!</li>
-                <li><strong>Promote Literacy:</strong> Share the joy of reading with others.</li>
-                <li><strong>Sustainable:</strong> Contribute to the circular economy by reusing books.</li>
-                <li><strong>Build Community:</strong> Connect with fellow book lovers and grow your personal library.</li>
-            </ul>
-        </div>
-    </section>
-
-    <!-- Testimonials Section -->
-    <section class="testimonials">
-        <div class="container">
-            <h2>What Our Users Are Saying</h2>
-            <div class="testimonial-carousel">
-                <div class="testimonial">
-                    <p>"This platform made it so easy to swap books with others! I’ve found so many great reads."</p>
-                    <p>- User 1</p>
-                </div>
-                <div class="testimonial">
-                    <p>"I love how I can give away books I no longer need and get new ones in return!"</p>
-                    <p>- User 2</p>
-                </div>
-                <div class="testimonial">
-                    <p>"A fantastic way to build a community of readers and promote sustainability!"</p>
-                    <p>- User 3</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Call to Action Section -->
+    <!-- Call to Action -->
     <section class="cta">
-        <div class="container">
-            <h2>Join the Swap and Share Bookshelf Today!</h2>
-            <p>Sign up now to start swapping books and discover new reads.</p>
-            <a href="#register" class="cta-btn">Sign Up</a>
+        <img src="4.png" alt="Library">
+        <div class="cta-text">
+            <h2>PASS A BOOK, <span>GAIN A STORY</span></h2>
+            <a href="#" class="btn">Sign Up</a>
+            <a href="#" class="btn btn-dark">Login</a>
         </div>
     </section>
 
-    <!-- Footer Section -->
+    <!-- Footer -->
     <footer>
-        <div class="container">
-            <div class="quick-links">
-                <ul>
-                    <li><a href="#about">About Us</a></li>
-                    <li><a href="#terms">Terms & Conditions</a></li>
-                    <li><a href="#privacy">Privacy Policy</a></li>
-                    <li><a href="#faq">FAQs</a></li>
-                </ul>
-            </div>
-            <div class="contact-info">
-                <p>Email: support@swapandsharebookshelf.com</p>
-                <p>Phone: (123) 456-7890</p>
-            </div>
-            <div class="social-media">
-                <a href="#">Facebook</a>
-                <a href="#">Twitter</a>
-                <a href="#">Instagram</a>
-                <a href="#">LinkedIn</a>
-            </div>
-        </div>
+        <p>&copy; 2025 Swap & Share Bookshelf. All Rights Reserved.</p>
     </footer>
 
 </body>
