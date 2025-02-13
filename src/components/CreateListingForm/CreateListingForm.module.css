@@ -1,0 +1,76 @@
+.createListingForm {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 800px;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .formAndImage {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    width: 100%;
+  }
+  
+  .imagePreview {
+    margin-right: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+  }
+  
+  .bookImg {
+    width: 200px; 
+    height: 300px; 
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+  }
+  
+  .formContent {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    flex: 2;
+    position: relative;
+  }
+  
+  .createListingHeading {
+    position: absolute;
+    top: -25px;
+    left: 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .formContent input,
+  .formContent select {
+    margin: 10px 0;
+    padding: 10px;
+    font-size: 1rem;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .formContent button {
+    padding: 12px 20px;
+    background-color: red; 
+    color: white;
+    font-size: 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 15px;
+  }
+  
+  .formContent button:hover {
+    background-color: #d32f2f; 
+  }
