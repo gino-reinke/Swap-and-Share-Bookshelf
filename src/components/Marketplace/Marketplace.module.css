@@ -1,12 +1,14 @@
+@import "../../vars.css";
+
 * {
   font-family: var(--font-dmsans);
 }
 
 .container {
   display: flex;
-  flex-direction: row; 
-  align-items: center; 
-  justify-content: space-between; 
+  flex-direction: row; /* one row */
+  align-items: center; /* Align items vertically */
+  justify-content: space-between; /* space evenly */
   padding: 20px;
   background: #FFFFFF;
   margin-left: 10%;
@@ -15,7 +17,7 @@
 
 .header {
   display: flex;
-  flex-direction: row; 
+  flex-direction: row; /* Ensure content elements stay in a row */
   align-items: center;
   justify-content: space-between;
   flex-grow: 1;
@@ -31,7 +33,7 @@
 
 .buttonContainer {
   display: flex;
-  gap: 15px; 
+  gap: 15px; /* Ensures spacing between buttons */
 }
 
 .exploreBtn, .filterBtn {
@@ -52,153 +54,4 @@
   background-color: white;
   border: 1px solid #D32F2F;
   color: #D32F2F;
-}
-
-
-
-
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-}
-
-.title {
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 20px;
-}
-
-.description {
-  font-size: 1rem;
-  margin-bottom: 30px;
-}
-
-.createListingForm {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  width: 100%;
-  max-width: 800px;
-  background-color: #f9f9f9;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.formAndImage {
-  display: flex;
-  align-items: flex-start;
-  margin-bottom: 20px;
-  width: 100%;
-}
-
-.imagePreview {
-  margin-right: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex: 1;
-}
-
-.bookImg {
-  width: 200px; 
-  height: 300px; 
-  object-fit: cover;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-}
-
-.formContent {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  flex: 2;
-  position: relative;
-}
-
-.createListingHeading {
-  position: absolute;
-  top: -25px;
-  left: 0;
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-
-.formContent input,
-.formContent select {
-  margin: 10px 0;
-  padding: 10px;
-  font-size: 1rem;
-  width: 100%;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.formContent button {
-  padding: 12px 20px;
-  background-color: red; 
-  color: white;
-  font-size: 1rem;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  margin-top: 15px;
-}
-
-.formContent button:hover {
-  background-color: #d32f2f; 
-}
-
-.bookGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px;
-  margin-top: 30px;
-  width: 100%;
-}
-
-.bookCard {
-  display: flex;
-  flex-direction: column;
-  background-color: #fff;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.bookCard img {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
-}
-
-.bookInfo {
-  margin-top: 15px;
-}
-
-.bookTitle {
-  font-size: 1.25rem;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-.bookAuthor,
-.bookGenre,
-.bookISBN,
-.bookCondition {
-  font-size: 1rem;
-  margin-bottom: 5px;
-  color: #555;
-}
-
-.bookAuthor {
-  font-style: italic;
-}
-
-.bookTitle,
-.bookCondition {
-  color: #333;
 }
