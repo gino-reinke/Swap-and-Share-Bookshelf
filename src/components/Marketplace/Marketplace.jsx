@@ -1,15 +1,12 @@
 import React, { useState } from "react";
 import styles from "./Marketplace.module.css";
-import BookCard from "../BookCard/BookCard";
-import CreateListingForm from "../CreateListingForm/CreateListingForm";
+import CreateListingModal from "./CreateListingModal";
 
 export const Marketplace = () => {
-  const [isCreateListingPage, setIsCreateListingPage] = useState(false);
-  const [listings, setListings] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleCreateListing = (newListing) => {
-    setListings([...listings, newListing]);
-    setIsCreateListingPage(false); 
+    setIsModalOpen(false); // Close modal after submission
   };
 
   return (
@@ -17,32 +14,19 @@ export const Marketplace = () => {
       <div className={styles.header}>
         <h1 className={styles.title}>MARKETPLACE</h1>
         <div className={styles.buttonContainer}>
-          <button
-            className={styles.exploreBtn}
-            onClick={() => setIsCreateListingPage(true)} 
-          >
+          <button className={styles.exploreBtn} onClick={() => setIsModalOpen(true)}>
             Create Listing
           </button>
-          <button
-            className={styles.filterBtn}
-            onClick={() => alert("Pressed!")}
-          >
+          <button className={styles.filterBtn} onClick={() => alert("Pressed!")}>
             All Filters
           </button>
         </div>
       </div>
 
-      {isCreateListingPage ? (
-        <CreateListingForm onCreate={handleCreateListing} />
-      ) : (
-        <div className={styles.marketplaceContent}>
-          <div className={styles.bookGrid}>
-            {listings.map((book, index) => (
-              <BookCard key={index} book={book} />
-            ))}
-          </div>
-        </div>
-      )}
+      {/* Create Listing Modal */}
+      <CreateListingModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onCreate={handleCreateListing} />
     </section>
   );
 };
+
+export default Marketplace;

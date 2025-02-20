@@ -1,0 +1,106 @@
+@import "../../vars.css";
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 100%;
+    position: relative;
+  }
+  
+  .closeBtn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: var(--color-text);
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+  }
+  
+  
+  .modalTitle {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .createListingForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .formAndImage {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+  }
+  
+  .imagePreview {
+    margin-right: 20px;
+  }
+  
+  .bookImg {
+    width: 150px;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+  
+  .formContent {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+  }
+  
+  .createListingHeading {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .formContent input,
+  .formContent select {
+    margin: 10px 0;
+    padding: 10px;
+    font-size: 1rem;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .formContent button {
+    padding: 12px;
+    background-color: red;
+    color: white;
+    font-size: 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .formContent button:hover {
+    background-color: #d32f2f;
+  }
+  
