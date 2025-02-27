@@ -23,7 +23,6 @@
   width: 50%; /* Adjust width for better centering */
   min-width: 350px;
   margin-left: 200px;
-
 }
 
 .title {
@@ -68,6 +67,58 @@
   border: 1px solid var(--color-text-gray);
   width: 100%;
   background: #FFF;
+}
+
+.passwordContainer {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+}
+
+.passwordToggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0;
+  color: #333;
+  width: 24px; /* Match the icon size */
+  height: 24px; /* Match the icon size */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.passwordToggle:hover {
+  background: none; /* Ensure the background remains transparent on hover */
+}
+
+.passwordRequirements {
+  font-size: 14px;
+  color: var(--color-text-gray);
+  margin-top: 5px;
+  text-align: left;
+  width: 100%;
+  list-style: none;
+  padding-left: 0;
+}
+
+.passwordRequirements li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.passwordRequirements .valid {
+  color: green;
+}
+
+.passwordRequirements .invalid {
+  color: red;
 }
 
 .loginBtn {

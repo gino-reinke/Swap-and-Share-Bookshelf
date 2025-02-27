@@ -4,10 +4,12 @@ import { useNavigate, Link } from 'react-router-dom';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../firebase';
 import { getImageUrl } from '../../utils';
+import { Eye, EyeOff } from 'lucide-react';
 
 export const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -21,6 +23,10 @@ export const Login = () => {
             console.error('Error logging in:', error);
             alert('Incorrect email or password, try again...');
         }
+    };
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
     };
 
     return (
@@ -52,14 +58,23 @@ export const Login = () => {
 
                     <div className={styles.inputContainer}>
                         <label className={styles.label}>Password</label>
-                        <input
-                            type="password"
-                            placeholder="**********"
-                            value={password}
-                            onChange={(event) => setPassword(event.target.value)}
-                            className={styles.input}
-                            required
-                        />
+                        <div className={styles.passwordContainer}>
+                            <input
+                                type={showPassword ? "text" : "password"}
+                                placeholder="**********"
+                                value={password}
+                                onChange={(event) => setPassword(event.target.value)}
+                                className={styles.input}
+                                required
+                            />
+                            <button
+                                type="button"
+                                className={styles.passwordToggle}
+                                onClick={togglePasswordVisibility}
+                            >
+                                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                            </button>
+                        </div>
                     </div>
 
                     <button type="submit" className={styles.loginBtn}>Sign in</button>
