@@ -55,11 +55,13 @@ export const Navbar = () => {
                 alt="heart"
                 className={styles.icon}
               />
-              <img
-                src={getImageUrl("nav/inbox.png")}
-                alt="inbox"
-                className={styles.icon}
-              />
+              <Link to="/messaging">
+                <img
+                  src={getImageUrl("nav/inbox.png")}
+                  alt="inbox"
+                  className={styles.icon}
+                />
+              </Link>
               <img
                 src={getImageUrl("nav/account.png")}
                 alt="account"
