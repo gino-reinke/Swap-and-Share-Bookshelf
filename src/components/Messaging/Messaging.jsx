@@ -1,12 +1,27 @@
-import React, { useState } from 'react';
+// src/components/Messaging/Messaging.jsx
+
+import React, { useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './Messaging.module.css';
-import { getImageUrl } from '../../utils';
+import { CometChatConversations } from "@cometchat/chat-uikit-react";
+import { AuthContext } from '../../context/AuthContext';
 
 export const Messaging = () => {
+  const { currentUser } = useContext(AuthContext);
+  const navigate = useNavigate();
 
-    return (
-        <section className={styles.container}>
+  useEffect(() => {
+    // If the user is not logged into Firebase, redirect them
+    if (!currentUser) {
+      navigate('/signin');
+    }
+    // Otherwise, we assume CometChat login was done in your login flow.
+    // If you want, you can also attempt CometChatUIKit.login here again.
+  }, [currentUser, navigate]);
 
-        </section>
-    );
+  return (
+    <section className={styles.container}>
+        <CometChatConversations />
+    </section>
+  );
 };
