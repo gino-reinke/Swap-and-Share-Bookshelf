@@ -1,33 +1,37 @@
 import React, { useState } from 'react';
 import styles from './Login.module.css';
 import { useNavigate, Link } from 'react-router-dom';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../firebase';
+import { handleLogin } from '../../services/authservice';
 import { getImageUrl } from '../../utils';
 
 export const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const navigate = useNavigate();
 
-    const handleLogin = async (e) => {
+    const onLogin = async (e) => {
         e.preventDefault();
+        setError(""); // Clear previous errors
+
         try {
-            const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            const user = userCredential.user;
-    
-            console.log('User logged in:', user.displayName);
-            alert('Login successful!');
+            const { success, message } = await handleLogin(email, password);
+            if (success) {
+                alert('Login successful!');
+                navigate('/account');
+            } else {
+                setError(message); // Show error message if login failed
+            }
         } catch (error) {
-            console.error('Error logging in:', error);
-            alert('Incorrect email or password, try again...');
+            setError(error.message); // Handle unexpected errors
         }
     };
 
     return (
         <section className={styles.container}>
-            <img 
-                src={getImageUrl("login/loginLibrary.png")} 
-                alt="Little Library Image" 
+            <img
+                src={getImageUrl("login/loginLibrary.png")}
+                alt="Little Library Image"
                 className={styles.heroImg}
             />
 
@@ -37,7 +41,7 @@ export const Login = () => {
                     Access your personalized book swapping experience.
                 </p>
 
-                <form onSubmit={handleLogin}>
+                <form onSubmit={onLogin}>
                     <div className={styles.inputContainer}>
                         <label className={styles.label}>Email</label>
                         <input
@@ -61,6 +65,8 @@ export const Login = () => {
                             required
                         />
                     </div>
+
+                    {error && <p className={styles.error}>{error}</p>}
 
                     <button type="submit" className={styles.loginBtn}>Sign in</button>
                 </form>

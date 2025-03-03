@@ -1,82 +1,77 @@
-import React, { useState } from 'react';
-import styles from './Login.module.css';
-import { useNavigate, Link } from 'react-router-dom';
-import { handleLogin } from '../../services/authservice';
-import { getImageUrl } from '../../utils';
+    import {
+        signInWithEmailAndPassword,
+        createUserWithEmailAndPassword,
+        updateProfile,
+        sendEmailVerification
+    } from 'firebase/auth';
+    import { auth } from '../firebase';
 
 
-export const Login = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
-    const navigate = useNavigate();
+    const validateCredentials = (email, password, username = null) => {
+        const RegexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const RegexPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
 
-    const onLogin = async (e) => {
-        e.preventDefault();
-        try {
-            const { success } = await handleLogin(email, password);
-            if (success) {
-                alert('Login successful!');
-                navigate('/account');
-            }
-        } catch (error) {
-            setError(error.message);
+        if (!RegexEmail.test(email)) throw new Error('Invalid email format.');
+        if (!RegexPass.test(password)) throw new Error('Password must be at least 8 characters long, include uppercase, lowercase, a number, and a special character.');
+        if (username && username.length > 16) throw new Error('Username must be 16 characters or less.');
+    };
+
+
+    // Maps Firebase errors to user-friendly messages
+    const mapAuthError = (error) => {
+        switch (error.code) {
+            case 'auth/email-already-in-use': return 'This email is already in use.';
+            case 'auth/user-not-found': return 'No account found with this email.';
+            case 'auth/wrong-password': return 'Incorrect password. Please try again.';
+            case 'auth/invalid-email': return 'Invalid email format.';
+            default: return error.message;
         }
     };
 
 
-    return (
-        <section className={styles.container}>
-            <img
-                src={getImageUrl("login/loginLibrary.png")}
-                alt="Little Library Image"
-                className={styles.heroImg}
-            />
+    export const handleLogin = async (email, password) => {
+        try {
+            validateCredentials(email, password);
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
 
 
-            <div className={styles.content}>
-                <h1 className={styles.title}>Sign in to your account</h1>
-                <p className={styles.description}>
-                    Access your personalized book swapping experienc e.
-                </p>
+            // Reload user to get the latest email verification status
+            await user.reload();
+            if (!user.emailVerified) throw new Error('Please verify your email before logging in.');
 
 
-                <form onSubmit={handleLogin}>
-                    <div className={styles.inputContainer}>
-                        <label className={styles.label}>Email</label>
-                        <input
-                            type="email"
-                            placeholder="email@address.com"
-                            value={email}
-                            onChange={(event) => setEmail(event.target.value)}
-                            className={styles.input}
-                            required
-                        />
-                    </div>
+            console.log('User logged in:', user.displayName);
+            return { success: true, user };
+        } catch (error) {
+            console.error('Error logging in:', error);
+            throw new Error(mapAuthError(error));
+        }
+    };
 
 
-                    <div className={styles.inputContainer}>
-                        <label className={styles.label}>Password</label>
-                        <input
-                            type="password"
-                            placeholder="**********"
-                            value={password}
-                            onChange={(event) => setPassword(event.target.value)}
-                            className={styles.input}
-                            required
-                        />
-                    </div>
+    export const handleSignup = async (email, password, username) => {
+    try {
+        validateCredentials(email, password, username);
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
 
+        // Set username
+        await updateProfile(user, { displayName: username });
 
-                    <button type="submit" className={styles.loginBtn}>Sign in</button>
-                </form>
+        // Send email verification
+        await sendEmailVerification(user);
 
+        console.log('User signed up:', user);
+        return { success: true, user };
+    } catch (error) {
+        console.error('Error signing up:', error);
 
-                <p className={styles.registerPrompt}>
-                    New to Swap & Share Bookshelf? <Link to="/signup">Create an Account</Link>
-                </p>
-            </div>
-        </section>
-    );
+        if (error.code === 'auth/email-already-in-use') {
+            return { success: false, message: 'This email is already in use. Try signing in instead.' };
+        }
+
+        return { success: false, message: mapAuthError(error) };
+    }
 };
