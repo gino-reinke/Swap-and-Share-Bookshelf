@@ -1,43 +1,4 @@
-/* src/components/Messaging/Messaging.module.css */
-
-/* Import CometChat UI Kit's CSS (if not already imported globally) */
-@import '@cometchat/chat-uikit-react/dist/styles/css-variables.css';
-
 .container {
   display: flex;
-  height: 100vh;
-  /* Adjust as needed for layout */
-}
 
-/* Search section at the top or side of the container */
-.searchSection {
-  display: flex;
-  flex-direction: column;
-  width: 250px; /* or adapt to your layout */
-  border-right: 1px solid #ccc;
-  padding: 1rem;
-}
-
-/* The actual input box */
-.searchInput {
-  padding: 0.5rem;
-  margin-bottom: 0.5rem;
-}
-
-/* Container for listing results */
-.searchResults {
-  background: #fff;
-  border: 1px solid #ccc;
-  max-height: 200px;
-  overflow-y: auto;
-  margin-top: 0.5rem;
-}
-
-/* Each user row in the search results */
-.userItem {
-  padding: 0.5rem;
-  cursor: pointer;
-}
-.userItem:hover {
-  background: #f0f0f0;
 }
