@@ -20,7 +20,7 @@ export const Login = () => {
             const { success, message } = await handleLogin(email, password);
             if (success) {
                 alert('Login successful!');
-                navigate('/account');
+                navigate('/');
             } else {
                 setError(message); // Show error message if login failed
             }
@@ -41,14 +41,12 @@ export const Login = () => {
                 className={styles.heroImg}
             />
 
+            <div className={styles.content}>
+                <h1 className={styles.title}>Sign in to your account</h1>
+                <p className={styles.description}>
+                    Access your personalized book swapping experience.
+                </p>
 
-  return (
-    <section className={styles.container}>
-      <img 
-        src={getImageUrl("login/loginLibrary.png")} 
-        alt="Little Library Image" 
-        className={styles.heroImg}
-      />
                 <form onSubmit={onLogin}>
                     <div className={styles.inputContainer}>
                         <label className={styles.label}>Email</label>
