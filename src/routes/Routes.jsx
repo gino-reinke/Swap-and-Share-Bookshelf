@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Home from "../pages/HomePage";
 import Login from "../pages/LoginPage";
 import Marketplace from "../pages/MarketplacePage";
@@ -8,12 +8,11 @@ import TradingTips from "../pages/TradingTipsPage";
 import Account from "../pages/AccountPage";
 import Messaging from "../pages/MessagingPage";
 
-
 const AppRoutes = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Navigate to="/signin" />} />
         <Route path="/signin" element={<Login />} />
         <Route path="/marketplace" element={<Marketplace />} />
         <Route path="/about" element={<About />} />

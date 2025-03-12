@@ -1,44 +1,46 @@
 import React, { useState } from 'react';
 import styles from './Login.module.css';
 import { useNavigate, Link } from 'react-router-dom';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../firebase';
+import { handleLogin } from '../../services/authservice';
 import { getImageUrl } from '../../utils';
-import { CometChatUIKit } from "@cometchat/chat-uikit-react";
+import { Eye, EyeOff } from 'lucide-react';
 
 export const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const navigate = useNavigate();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const navigate = useNavigate();
+    const [showPassword, setShowPassword] = useState(false);
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      // 1. Log in with Firebase
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      const firebaseUser = userCredential.user;
-      console.log("Firebase Login Success:", firebaseUser.uid, firebaseUser.displayName);
+    const onLogin = async (e) => {
+        e.preventDefault();
+        setError(""); // Clear previous errors
 
-      // 2. Check if the user is already logged in to CometChat
-      const ccUser = await CometChatUIKit.getLoggedinUser();
+        try {
+            const { success, message } = await handleLogin(email, password);
+            if (success) {
+                alert('Login successful!');
+                navigate('/account');
+            } else {
+                setError(message); // Show error message if login failed
+            }
+        } catch (error) {
+            setError(error.message); // Handle unexpected errors
+        }
+    };
 
-      if (!ccUser) {
-        // 3. If not logged in, log in with the string UID (firebaseUser.uid).
-        await CometChatUIKit.login(firebaseUser.uid);
-        console.log("CometChat Login Success:", firebaseUser.uid);
-      } else {
-        console.log("CometChat: user already logged in:", ccUser.uid);
-      }
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
 
-      alert("Login successful!");
-      // 4. Navigate to your chat page or wherever
-      navigate('/messaging');
+    return (
+        <section className={styles.container}>
+            <img
+                src={getImageUrl("login/loginLibrary.png")}
+                alt="Little Library Image"
+                className={styles.heroImg}
+            />
 
-    } catch (error) {
-      console.error('Error logging in:', error);
-      alert('Incorrect email or password, try again...');
-    }
-  };
 
   return (
     <section className={styles.container}>
@@ -47,45 +49,49 @@ export const Login = () => {
         alt="Little Library Image" 
         className={styles.heroImg}
       />
+                <form onSubmit={onLogin}>
+                    <div className={styles.inputContainer}>
+                        <label className={styles.label}>Email</label>
+                        <input
+                            type="email"
+                            placeholder="email@address.com"
+                            value={email}
+                            onChange={(event) => setEmail(event.target.value)}
+                            className={styles.input}
+                            required
+                        />
+                    </div>
 
-      <div className={styles.content}>
-        <h1 className={styles.title}>Sign in to your account</h1>
-        <p className={styles.description}>
-          Access your personalized book swapping experience.
-        </p>
+                    <div className={styles.inputContainer}>
+                        <label className={styles.label}>Password</label>
+                        <div className={styles.passwordContainer}>
+                            <input
+                                type={showPassword ? "text" : "password"}
+                                placeholder="**********"
+                                value={password}
+                                onChange={(event) => setPassword(event.target.value)}
+                                className={styles.input}
+                                required
+                            />
+                            <button
+                                type="button"
+                                className={styles.passwordToggle}
+                                onClick={togglePasswordVisibility}
+                            >
+                                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                            </button>
+                        </div>
+                    </div>
 
-        <form onSubmit={handleLogin}>
-          <div className={styles.inputContainer}>
-            <label className={styles.label}>Email</label>
-            <input
-              type="email"
-              placeholder="email@address.com"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              className={styles.input}
-              required
-            />
-          </div>
+                    {error && <p className={styles.error}>{error}</p>}
 
-          <div className={styles.inputContainer}>
-            <label className={styles.label}>Password</label>
-            <input
-              type="password"
-              placeholder="**********"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-              className={styles.input}
-              required
-            />
-          </div>
+                    <button type="submit" className={styles.loginBtn}>Sign in</button>
+                </form>
 
-          <button type="submit" className={styles.loginBtn}>Sign in</button>
-        </form>
-
-        <p className={styles.registerPrompt}>
-          New to Swap & Share Bookshelf? <Link to="/signup">Create an Account</Link>
-        </p>
-      </div>
-    </section>
-  );
+                <p className={styles.registerPrompt}>
+                    New to Swap & Share Bookshelf? <Link to="/signup">Create an Account</Link>
+                </p>
+            </div>
+        </section>
+    );
 };
