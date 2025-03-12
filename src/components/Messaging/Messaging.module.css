@@ -1,5 +1,4 @@
-@import "../../vars.css";
-
 .container {
+  display: flex;
 
 }

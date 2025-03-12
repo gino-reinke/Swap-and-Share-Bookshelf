@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from "./Marketplace.module.css";
 import CreateListingModal from "./CreateListingModal";
+import Listing from "../Listing/Listing";
 
 export const Marketplace = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -23,8 +24,12 @@ export const Marketplace = () => {
         </div>
       </div>
 
+      <Listing />
+
       {/* Create Listing Modal */}
       <CreateListingModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onCreate={handleCreateListing} />
+    
+
     </section>
   );
 };
