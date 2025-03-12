@@ -1,7 +1,38 @@
-@import "../../vars.css";
+.footer {
+  background-color: #b22222; /* Deep red */
+  padding: 25px 0;
+  text-align: center;
+  border-top: 3px solid #8b0000; /* Darker red for subtle contrast */
+  color: white; /* White text for readability */
+}
 
-.container {
-    position: relative;
-    display: flex;
+.content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
 
-  }
+.navList {
+  list-style: none;
+  padding: 0;
+  margin: 15px 0 0;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.navList li {
+  display: inline;
+}
+
+.navList a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  transition: color 0.3s ease-in-out;
+}
+
+.navList a:hover {
+  color: #ffcccc; /* Soft red on hover */
+  text-decoration: underline;
+}

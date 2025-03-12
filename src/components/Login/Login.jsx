@@ -3,12 +3,14 @@ import styles from './Login.module.css';
 import { useNavigate, Link } from 'react-router-dom';
 import { handleLogin } from '../../services/authservice';
 import { getImageUrl } from '../../utils';
+import { Eye, EyeOff } from 'lucide-react';
 
 export const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    const [showPassword, setShowPassword] = useState(false);
 
     const onLogin = async (e) => {
         e.preventDefault();
@@ -25,6 +27,10 @@ export const Login = () => {
         } catch (error) {
             setError(error.message); // Handle unexpected errors
         }
+    };
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
     };
 
     return (
@@ -56,14 +62,23 @@ export const Login = () => {
 
                     <div className={styles.inputContainer}>
                         <label className={styles.label}>Password</label>
-                        <input
-                            type="password"
-                            placeholder="**********"
-                            value={password}
-                            onChange={(event) => setPassword(event.target.value)}
-                            className={styles.input}
-                            required
-                        />
+                        <div className={styles.passwordContainer}>
+                            <input
+                                type={showPassword ? "text" : "password"}
+                                placeholder="**********"
+                                value={password}
+                                onChange={(event) => setPassword(event.target.value)}
+                                className={styles.input}
+                                required
+                            />
+                            <button
+                                type="button"
+                                className={styles.passwordToggle}
+                                onClick={togglePasswordVisibility}
+                            >
+                                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                            </button>
+                        </div>
                     </div>
 
                     {error && <p className={styles.error}>{error}</p>}
