@@ -6,12 +6,14 @@ import Listing from "../Listing/Listing";
 export const Marketplace = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleCreateListing = (newListing) => {
+  const handleCreateListing = () => {
     setIsModalOpen(false); // Close modal after submission
   };
 
   // Generate 15 Listing components
-  const listings = Array.from({ length: 15 }, (_, index) => <Listing key={index} />);
+  const listings = Array.from({ length: 15 }, (_, index) => (
+    <Listing key={`listing-${index}`} />
+  ));
 
   return (
     <section className={styles.container}>
@@ -29,9 +31,7 @@ export const Marketplace = () => {
 
       {/* Listing Grid */}
       <div className={styles.listingWrapper}>
-        <div className={styles.listingGrid}>
-          {listings}
-        </div>
+        <div className={styles.listingGrid}>{listings}</div>
       </div>
 
       {/* Create Listing Modal */}
