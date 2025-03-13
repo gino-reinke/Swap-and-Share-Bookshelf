@@ -1,19 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { firestore } from "../../firebase";
 import styles from "./Marketplace.module.css";
 import CreateListingModal from "./CreateListingModal";
 import Listing from "../Listing/Listing";
 
 export const Marketplace = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [listings, setListings] = useState([]);
 
-  const handleCreateListing = () => {
-    setIsModalOpen(false); // Close modal after submission
+  useEffect(() => {
+    fetchListings();
+  }, []);
+
+  const fetchListings = async () => {
+    const querySnapshot = await getDocs(collection(firestore, "listings"));
+    const fetchedListings = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    setListings(fetchedListings);
   };
 
-  // Generate 15 Listing components
-  const listings = Array.from({ length: 15 }, (_, index) => (
-    <Listing key={`listing-${index}`} />
-  ));
+  const handleCreateListing = () => {
+    setIsModalOpen(false);
+    fetchListings(); // Refresh listings when a new one is created
+  };
 
   return (
     <section className={styles.container}>
@@ -29,13 +38,19 @@ export const Marketplace = () => {
         </div>
       </div>
 
-      {/* Listing Grid */}
       <div className={styles.listingWrapper}>
-        <div className={styles.listingGrid}>{listings}</div>
+        <div className={styles.listingGrid}>
+          {listings.map((listing) => (
+            <Listing key={listing.id} listing={listing} />
+          ))}
+        </div>
       </div>
 
-      {/* Create Listing Modal */}
-      <CreateListingModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onCreate={handleCreateListing} />
+      <CreateListingModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+        onCreate={handleCreateListing} 
+      />
     </section>
   );
 };

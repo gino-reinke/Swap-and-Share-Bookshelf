@@ -25,12 +25,15 @@
   align-self: stretch;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: stretch;
+  justify-content: flex-start;
   background: #FFFFFF;
   border-radius: 13px;
   padding-top: 11px;
-  padding-bottom: 56px;
-  margin-bottom: 123px;
+  padding-bottom: 15px; /* reduce bottom padding */
+  margin-bottom: 20px;
+  height: 428px; /* Fixed height to match container */
+  overflow: hidden;
 }
 
 .bookContent {
@@ -42,8 +45,10 @@
 .favoriteIcon {
   width: 30px;
   height: 30px;
-  margin-right: 4%;
-  object-fit: fill;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 2;
 }
 
 .detailsRow {
@@ -52,6 +57,7 @@
   align-items: flex-start;
   margin-left: 12px;
   margin-right: 12px;
+  margin-top: auto; /* Pushes this button to bottom consistently */
 }
 
 .bookTitle {
@@ -62,13 +68,16 @@
   margin-left: 13px;
 }
 
+
 .bookDescription {
   color: #979797;
   font-size: 10px;
   font-weight: bold;
-  margin-bottom: 24px;
+  margin-bottom: 10px;
   margin-left: 12px;
   margin-right: 12px;
+  flex-grow: 1; /* allows description to take up available space */
+  overflow: hidden;
 }
 
 .buttonText {
@@ -81,12 +90,30 @@
   align-self: stretch;
   background: #C4C4C4;
   border-radius: 10px;
-  padding-top: 7px;
-  padding-bottom: 161px;
-  margin-bottom: 7px;
-  margin-left: 12px;
-  margin-right: 12px;
+  height: 220px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
 }
+
+
+.bookImage {
+  height: 100%;
+  width: auto;
+  object-fit: contain; /* Preserves aspect ratio */
+}
+
+
+.bookLocation {
+  color: #979797;
+  font-size: 12px;
+  font-weight: bold;
+  margin-left: 12px;
+  margin-bottom: 10px;
+}
+
 
 .bookCoverWrapper {
   align-self: stretch;
