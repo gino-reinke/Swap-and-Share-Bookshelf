@@ -6,9 +6,8 @@
 
 .container {
   display: flex;
-  flex-direction: row; /* one row */
-  align-items: center; /* Align items vertically */
-  justify-content: space-between; /* space evenly */
+  flex-direction: column; /* Ensures content stacks vertically */
+  align-items: center;
   padding: 20px;
   background: #FFFFFF;
   margin-left: 10%;
@@ -17,11 +16,10 @@
 
 .header {
   display: flex;
-  flex-direction: row; /* Ensure content elements stay in a row */
+  flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  flex-grow: 1;
-  width: 85%;
+  width: 100%;
 }
 
 .title {
@@ -54,4 +52,19 @@
   background-color: white;
   border: 1px solid #D32F2F;
   color: #D32F2F;
+}
+
+.listingWrapper {
+  width: 100%; /* Ensures listings take full width */
+  margin-top: 20px; /* Space from the header */
+  display: flex;
+  justify-content: center; /* Centers the grid */
+}
+
+.listingGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 listings per row */
+  gap: 20px; /* Spacing between grid items */
+  max-width: 1200px; /* Keeps it from getting too wide */
+  width: 100%;
 }

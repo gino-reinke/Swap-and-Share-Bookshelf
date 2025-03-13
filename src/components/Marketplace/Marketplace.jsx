@@ -10,6 +10,9 @@ export const Marketplace = () => {
     setIsModalOpen(false); // Close modal after submission
   };
 
+  // Generate 15 Listing components
+  const listings = Array.from({ length: 15 }, (_, index) => <Listing key={index} />);
+
   return (
     <section className={styles.container}>
       <div className={styles.header}>
@@ -24,12 +27,15 @@ export const Marketplace = () => {
         </div>
       </div>
 
-      <Listing />
+      {/* Listing Grid */}
+      <div className={styles.listingWrapper}>
+        <div className={styles.listingGrid}>
+          {listings}
+        </div>
+      </div>
 
       {/* Create Listing Modal */}
       <CreateListingModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onCreate={handleCreateListing} />
-    
-
     </section>
   );
 };
