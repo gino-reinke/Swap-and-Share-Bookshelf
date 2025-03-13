@@ -10,6 +10,7 @@ export const CreateListingModal = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({
     title: "",
     author: "",
+    description: "",
     genre: "",
     isbn: "",
     condition: "",
@@ -55,6 +56,7 @@ export const CreateListingModal = ({ isOpen, onClose }) => {
       setFormData({
         title: "",
         author: "",
+        description: "",
         genre: "",
         isbn: "",
         condition: "",
@@ -90,6 +92,15 @@ export const CreateListingModal = ({ isOpen, onClose }) => {
 
               <input type="text" name="title" placeholder="Book Title" value={formData.title} onChange={handleChange} required />
               <input type="text" name="author" placeholder="Author" value={formData.author} onChange={handleChange} required />
+              <textarea 
+                name="description" 
+                placeholder="Description" 
+                value={formData.description} 
+                onChange={handleChange} 
+                rows="5"  // Adjust the rows for better height
+                className={styles.textarea} // Add a CSS class for styling
+                required
+              ></textarea>
               <select name="genre" value={formData.genre} onChange={handleChange} required>
                 <option value="">Select Genre</option>
                 <option value="Fiction">Fiction</option>
