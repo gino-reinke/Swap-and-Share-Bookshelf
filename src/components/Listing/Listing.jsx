@@ -2,38 +2,34 @@ import React from "react";
 import styles from "./Listing.module.css";
 import { getImageUrl } from '../../utils';
 
-const Listing = () => {
+const Listing = ({ listing }) => {
+  const { title, description, state, city, image } = listing;
+
   return (
     <section className={styles.container}>
       <div className={styles.column}>
-        <div className={styles.view}>
-          <div className={styles.view2}>
+        <div className={styles.bookCover}>
+          {image && (
             <img
-              src= {getImageUrl("listing/heart.png")}
-              className={styles.image2}
-              alt="Book Cover"
+              src={image}
+              className={styles.bookImage}
+              alt={title}
             />
-          </div>
-        </div>
-        <span className={styles.text}>{"Book 01"}</span>
-        <span className={styles.text2}>
-          {
-            "Book Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod"
-          }
-        </span>
-        <div className={styles.rowView}>
-          <button className={styles.button} onClick={() => alert("Pressed!")}>
-            <span className={styles.text3}>{"More details"}</span>
-          </button>
-
-        </div>
-        <div className={styles.view3}>
+          )}
           <img
             src= {getImageUrl("listing/heart.png")}
-            className={styles.image2}
-            alt="Additional Image"
+            className={styles.favoriteIcon}
+            alt="Favorite Icon"
           />
-          </div>
+        </div>
+        <span className={styles.bookTitle}>{title}</span>
+        <span className={styles.bookDescription}>{description}</span>
+        <span className={styles.bookLocation}>{city}, {state}</span>
+        <div className={styles.detailsRow}>
+          <button className={styles.detailsButton} onClick={() => alert("Pressed!")}>
+            <span className={styles.buttonText}>More details</span>
+          </button>
+        </div>
       </div>
     </section>
   );

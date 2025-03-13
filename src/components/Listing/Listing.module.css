@@ -1,6 +1,14 @@
 @import "../../vars.css";
 
-.button {
+.container {
+  /* width: 20%; */
+  width: 361px;
+  height: 386px;
+  /* min-width: 361px; */
+  /* border: #D32F2F 1px solid; */
+}
+
+.detailsButton {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -17,42 +25,41 @@
   align-self: stretch;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: stretch;
+  justify-content: flex-start;
   background: #FFFFFF;
   border-radius: 13px;
   padding-top: 11px;
-  padding-bottom: 56px;
-  margin-bottom: 123px;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+  height: 386px;
+  overflow: hidden;
 }
 
-.contain {
+.bookContent {
   display: flex;
   flex-direction: column;
   background: #FFFFFF;
 }
 
-.image {
-  width: 21px;
-  height: 21px;
-  margin-right: 14px;
-  object-fit: fill;
-}
-
-.image2 {
+.favoriteIcon {
   width: 30px;
   height: 30px;
-  object-fit: fill;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 2;
 }
 
-.rowView {
+
+.detailsRow {
   align-self: stretch;
   display: flex;
   align-items: flex-start;
-  margin-left: 12px;
-  margin-right: 12px;
+  margin-top: auto; 
 }
 
-.text {
+.bookTitle {
   color: #303137;
   font-size: 16px;
   font-weight: bold;
@@ -60,45 +67,56 @@
   margin-left: 13px;
 }
 
-.text2 {
+
+.bookDescription {
   color: #979797;
   font-size: 10px;
   font-weight: bold;
-  margin-bottom: 24px;
+  margin-bottom: 10px;
   margin-left: 12px;
   margin-right: 12px;
 }
 
-.text3 {
+.buttonText {
   color: #D32F2F;
   font-size: 15px;
   font-weight: bold;
 }
 
-.view {
+.bookCover {
   align-self: stretch;
-  background: #C4C4C4;
+  background: #303137;
   border-radius: 10px;
-  padding-top: 7px;
-  padding-bottom: 161px;
-  margin-bottom: 7px;
-  margin-left: 12px;
-  margin-right: 12px;
+  height: 220px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
 }
 
-.view2 {
+
+
+.bookImage {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+}
+
+
+.bookLocation {
+  color: #979797;
+  font-size: 12px;
+  font-weight: bold;
+  margin-left: 12px;
+  margin-bottom: 10px;
+}
+
+
+
+.bookCoverWrapper {
   align-self: stretch;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-}
-
-.view3 {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: #303137;
-  border-radius: 8px;
-  border: 1px solid #37383E;
-  padding: 7px 13px;
 }
