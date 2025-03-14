@@ -56,9 +56,12 @@
 }
 
 .icon {
-    cursor: pointer;
-    flex-shrink: 0;
+  cursor: pointer;
+  flex-shrink: 0;
+  width: 30px;  /* Ensure all icons have the same width */
+  height: 30px; /* Ensure all icons have the same height */
 }
+
 
   @media screen and (max-width: 830px) {
     .navbar {
