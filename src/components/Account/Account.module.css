@@ -1,7 +1,162 @@
-@import "../../vars.css";
-
 .container {
-    position: relative;
-    display: flex;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  background-color: var(--color-bg);
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: 1in auto 0 auto;
+}
 
-  }
+.tabs {
+  display: flex;
+  justify-content: space-around;
+  background-color: var(--color-bg);
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tabButton {
+  flex: 1;
+  padding: 10px 15px;
+  border: none;
+  background-color: var(--color-secondary);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  text-align: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  margin: 0 5px;
+  color: var(--color-text-white);
+}
+
+.tabButton:hover {
+  background-color: var(--color-darkgray);
+}
+
+.tabButton.active {
+  background-color: var(--color-primary);
+  color: var(--color-text-white);
+}
+
+.content {
+  background-color: var(--color-bg);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tabContent {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.tabContent h2 {
+  margin-bottom: 10px;
+  font-size: 20px;
+  color: var(--color-text);
+}
+
+.tabContent form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tabContent label {
+  font-size: 14px;
+  color: var(--color-text-gray);
+}
+
+.tabContent input[type="text"],
+.tabContent input[type="password"] {
+  padding: 10px;
+  border: 1px solid var(--color-text-gray);
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.tabContent button {
+  padding: 10px 15px;
+  background-color: var(--color-primary);
+  color: var(--color-text-white);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.tabContent button:hover {
+  background-color: var(--color-darkgray);
+}
+
+.logoutButton {
+  background-color: var(--color-primary);
+}
+
+.logoutButton:hover {
+  background-color: var(--color-darkgray);
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background-color: var(--color-bg);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+}
+
+.modalActions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.confirmButton {
+  background-color: var(--color-primary);
+  color: var(--color-text-white);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.confirmButton:hover {
+  background-color: var(--color-darkgray);
+}
+
+.cancelButton {
+  background-color: var(--color-secondary);
+  color: var(--color-text-white);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.cancelButton:hover {
+  background-color: var(--color-darkgray);
+}
