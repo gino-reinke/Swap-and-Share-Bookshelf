@@ -66,34 +66,81 @@ export const CreateListingModal = ({ isOpen, onClose, onCreate }) => {
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
+  
     if (file) {
+      // Check if file is larger than 1MB
+      if (file.size > 1048487) {
+        alert("File size too large. Resizing...");
+      }
+  
       const reader = new FileReader();
-      reader.onloadend = () => {
-        setFormData({ ...formData, image: reader.result });
-      };
       reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        const img = new Image();
+        img.src = reader.result;
+        img.onload = () => {
+          // Create a canvas to resize image
+          const canvas = document.createElement("canvas");
+          const ctx = canvas.getContext("2d");
+  
+          // Set max width and height (adjust as needed)
+          const maxWidth = 800;
+          const maxHeight = 800;
+          let width = img.width;
+          let height = img.height;
+  
+          // Scale the image while maintaining aspect ratio
+          if (width > maxWidth || height > maxHeight) {
+            const aspectRatio = width / height;
+            if (width > height) {
+              width = maxWidth;
+              height = maxWidth / aspectRatio;
+            } else {
+              height = maxHeight;
+              width = maxHeight * aspectRatio;
+            }
+          }
+  
+          // Resize image
+          canvas.width = width;
+          canvas.height = height;
+          ctx.drawImage(img, 0, 0, width, height);
+  
+          // Convert to Base64 with reduced quality
+          const resizedImage = canvas.toDataURL("image/jpeg", 0.7); // 0.7 reduces size without losing quality
+  
+          // Check final size
+          if (resizedImage.length > 1048487) {
+            alert("Resized image is still too large. Please upload a smaller image.");
+          } else {
+            setFormData({ ...formData, image: resizedImage });
+          }
+        };
+      };
     }
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     const auth = getAuth();
     const user = auth.currentUser;
-
+  
     if (!user) {
       console.error("User not authenticated.");
       return;
     }
-
+  
     try {
       await addDoc(collection(firestore, "listings"), {
         ...formData,
         userId: user.uid,
+        username: user.displayName || "Anonymous", // Add displayName here
         timestamp: new Date(),
       });
-
-      onCreate(); // Notify parent component
+  
+      onCreate();
       setFormData({
         title: "",
         author: "",
@@ -105,22 +152,24 @@ export const CreateListingModal = ({ isOpen, onClose, onCreate }) => {
         state: "",
         city: "",
       });
-
+  
       onClose();
     } catch (error) {
       console.error("Error adding document:", error);
     }
   };
+  
 
   return (
     <div className={styles.overlay}>
       <div className={styles.modal}>
-        <button className={styles.closeBtn} onClick={onClose}>
+      <button className={styles.closeBtn} onClick={onClose}>
           &times;
-        </button>
-        <h2 className={styles.modalTitle}>Create Listing</h2>
+        </button>        <h2 className={styles.modalTitle}>Create Listing</h2>
         <form className={styles.createListingForm} onSubmit={handleSubmit}>
           <div className={styles.formAndImage}>
+            
+            {/* First Column: Image Preview */}
             <div className={styles.imagePreview}>
               {formData.image ? (
                 <img className={styles.bookImg} src={formData.image} alt="Book Preview" />
@@ -129,9 +178,9 @@ export const CreateListingModal = ({ isOpen, onClose, onCreate }) => {
               )}
             </div>
 
+            {/* Second Column: Book Details */}
             <div className={styles.formContent}>
               <label className={styles.createListingHeading}>Book Details</label>
-
               <input type="text" name="title" placeholder="Book Title" value={formData.title} onChange={handleChange} required />
               <input type="text" name="author" placeholder="Author" value={formData.author} onChange={handleChange} required />
               <textarea name="description" placeholder="Description" value={formData.description} onChange={handleChange} rows="5" className={styles.textarea} required></textarea>
@@ -146,7 +195,11 @@ export const CreateListingModal = ({ isOpen, onClose, onCreate }) => {
               </select>
 
               <input type="text" name="isbn" placeholder="ISBN Number" value={formData.isbn} onChange={handleChange} required />
+            </div>
 
+            {/* Third Column: Condition, Location, and Image Upload */}
+            <div className={styles.extraColumn}>
+              <label className={styles.createListingHeading}>‎ </label>
               <select name="condition" value={formData.condition} onChange={handleChange} required>
                 <option value="">Select Condition</option>
                 <option value="New">New</option>
@@ -168,11 +221,12 @@ export const CreateListingModal = ({ isOpen, onClose, onCreate }) => {
                   <option key={city} value={city}>{city}</option>
                 ))}
               </select>
-
+                Upload image:
               <input type="file" accept="image/*" onChange={handleImageUpload} />
-              <button type="submit">Create Listing</button>
             </div>
           </div>
+
+          <button type="submit" className={styles.submitButton}>Create Listing</button>
         </form>
       </div>
     </div>

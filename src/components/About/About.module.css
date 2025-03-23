@@ -1,7 +1,29 @@
 @import "../../vars.css";
 
 .container {
-    position: relative;
-    display: flex;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
 
-  }
+h1 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+p {
+  font-size: 1.2rem;
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+/* Ensure class name matches the JSX */
+.heroImg {
+  width: 100%;
+  max-width: 400px;
+  margin-top: 20px;
+  border-radius: 10px;
+}

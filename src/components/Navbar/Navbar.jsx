@@ -51,19 +51,19 @@ export const Navbar = () => {
             </li>
             <li className={styles.icons}>
               <img
-                src={getImageUrl("nav/heart.png")}
+                src={getImageUrl("nav/heart.svg")}
                 alt="heart"
                 className={styles.icon}
               />
               <Link to="/messaging">
                 <img
-                  src={getImageUrl("nav/inbox.png")}
+                  src={getImageUrl("nav/inbox.svg")}
                   alt="inbox"
                   className={styles.icon}
                 />
               </Link>
               <img
-                src={getImageUrl("nav/account.png")}
+                src={getImageUrl("nav/account.svg")}
                 alt="account"
                 className={styles.icon}
                 onClick={() => setModalOpen(true)}
