@@ -123,22 +123,23 @@ export const CreateListingModal = ({ isOpen, onClose, onCreate }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     const auth = getAuth();
     const user = auth.currentUser;
-
+  
     if (!user) {
       console.error("User not authenticated.");
       return;
     }
-
+  
     try {
       await addDoc(collection(firestore, "listings"), {
         ...formData,
         userId: user.uid,
+        username: user.displayName || "Anonymous", // Add displayName here
         timestamp: new Date(),
       });
-
+  
       onCreate();
       setFormData({
         title: "",
@@ -151,12 +152,13 @@ export const CreateListingModal = ({ isOpen, onClose, onCreate }) => {
         state: "",
         city: "",
       });
-
+  
       onClose();
     } catch (error) {
       console.error("Error adding document:", error);
     }
   };
+  
 
   return (
     <div className={styles.overlay}>
