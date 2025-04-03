@@ -10,15 +10,13 @@
   background: #ffffff;
   padding: 20px;
   border-radius: 10px;
-  width: 70%;             /* Make it full width */
-  margin: 0 auto;          /* Center the wrapper itself */
+  width: 70%;
+  margin: 0 auto;
 }
-
-
 
 .headerRow {
   display: flex;
-  justify-content: space-between; /* pushes title left and buttons right */
+  justify-content: space-between;
   align-items: center;
   width: 100%;
   margin-bottom: 32px;
@@ -71,9 +69,23 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 64px;
-  /* Force centering */
-  place-items: center; /* Aligns grid items */
-  justify-content: center; /* Centers the grid itself horizontally */
+  place-items: center;
+  justify-content: center;
   width: fit-content;
   margin: 0 auto;
+}
+
+.locationFilters {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.dropdown {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  min-width: 180px;
 }
