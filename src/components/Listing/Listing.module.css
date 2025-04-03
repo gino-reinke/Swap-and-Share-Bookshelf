@@ -5,6 +5,8 @@
   width: 451px; 
   height: 440px;
   /* min-width: 361px; */
+  min-height: 440px; /* Ensures the container doesn't shrink below this width */
+  max-height: 440px; /* Ensures the container maintains height even if content is less */
   /* border: #D32F2F 1px solid; */
 }
 
@@ -76,6 +78,7 @@
   margin-bottom: 10px;
   margin-left: 12px;
   margin-right: 12px;
+  min-height: 32px; /* Ensures the description has a minimum height */
 }
 
 .buttonText {
@@ -94,6 +97,7 @@
   align-items: center;
   overflow: hidden;
   position: relative;
+  min-height: 275px;
 }
 
 
