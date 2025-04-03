@@ -1,4 +1,3 @@
-// src/components/Listing/Listing.jsx
 import React, { useState } from "react";
 import styles from "./Listing.module.css";
 import { getImageUrl } from '../../utils';

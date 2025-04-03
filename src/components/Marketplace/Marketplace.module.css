@@ -64,7 +64,10 @@
 .listingGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr); /* 3 listings per row */
-  gap: 20px; /* Spacing between grid items */
+  gap: 64px; /* Spacing between grid items */
   max-width: 1200px; /* Keeps it from getting too wide */
   width: 100%;
+  /* Force centering */
+  place-items: center; /* Aligns grid items */
+  justify-content: center; /* Centers the grid itself horizontally */
 }
