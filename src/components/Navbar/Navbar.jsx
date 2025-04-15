@@ -4,6 +4,7 @@ import { collection, getDocs } from "firebase/firestore";
 import styles from "./Navbar.module.css";
 import { getImageUrl } from "../../utils";
 import AccountModal from "./AccountModal";
+import DetailedListing from "../Listing/DetailedListing";
 import { AuthContext } from "../../context/AuthContext";
 import { firestore } from "../../firebase";
 
@@ -13,6 +14,7 @@ export const Navbar = () => {
   const [searchText, setSearchText] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [selectedListing, setSelectedListing] = useState(null);
   const searchWrapperRef = useRef(null);
   const inputRef = useRef(null);
   const { currentUser } = useContext(AuthContext);
@@ -22,11 +24,10 @@ export const Navbar = () => {
     const delay = setTimeout(() => {
       performSearch(searchText);
     }, 300);
-
     return () => clearTimeout(delay);
   }, [searchText]);
 
-  // Click outside detection
+  // Hide dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (
@@ -67,6 +68,11 @@ export const Navbar = () => {
     setShowDropdown(true);
   };
 
+  const handleResultClick = (listing) => {
+    setSelectedListing(listing);
+    setShowDropdown(false);
+  };
+
   return (
     <>
       <nav className={styles.navbar}>
@@ -90,17 +96,11 @@ export const Navbar = () => {
             className={`${styles.menuItems} ${menuOpen && styles.menuOpen}`}
             onClick={() => setMenuOpen(false)}
           >
-            <li>
-              <Link to="/marketplace">Marketplace</Link>
-            </li>
-            <li>
-              <Link to="/tradingtips">Trading Tips</Link>
-            </li>
-            <li>
-              <Link to="/about">About</Link>
-            </li>
+            <li><Link to="/marketplace">Marketplace</Link></li>
+            <li><Link to="/tradingtips">Trading Tips</Link></li>
+            <li><Link to="/about">About</Link></li>
 
-            {/* Search Bar + Dropdown Modal */}
+            {/* 🔍 Search input and dropdown */}
             <li style={{ position: "relative" }} ref={searchWrapperRef}>
               <input
                 ref={inputRef}
@@ -119,7 +119,11 @@ export const Navbar = () => {
                 <div className={styles.searchDropdown}>
                   {searchResults.length > 0 ? (
                     searchResults.map((item, index) => (
-                      <div key={index} className={styles.searchResult}>
+                      <div
+                        key={index}
+                        className={styles.searchResult}
+                        onClick={() => handleResultClick(item)} // click triggers modal
+                      >
                         <img src={item.image} alt="Book" className={styles.resultImage} />
                         <div>
                           <div className={styles.resultTitle}>{item.title}</div>
@@ -153,7 +157,6 @@ export const Navbar = () => {
                 alt="account"
                 className={styles.icon}
                 onClick={() => setModalOpen(true)}
-                style={{ cursor: "pointer" }}
               />
             </li>
           </ul>
@@ -162,6 +165,14 @@ export const Navbar = () => {
 
       {/* Account Modal */}
       <AccountModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
+
+      {/* Detailed listing modal */}
+      {selectedListing && (
+        <DetailedListing
+          listing={selectedListing}
+          onClose={() => setSelectedListing(null)}
+        />
+      )}
     </>
   );
 };
