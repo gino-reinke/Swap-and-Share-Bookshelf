@@ -1,0 +1,80 @@
+html, body {
+    margin: 0; 
+    padding: 0; 
+    height: 100%; 
+    overflow: hidden; 
+}
+
+.container {
+    background: url('/assets/Home/Home.png') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--color-text-white); 
+    text-align: center;
+    font-family: var(--font-raleway); 
+}
+
+.content {
+    padding: 2rem;
+    border-radius: 10px; 
+    box-shadow: none; 
+    margin-left: 6in;
+    transform: translateY(-2.2in);
+}
+
+.title {
+    font-size: 3rem; 
+    text-align: center;
+    margin-bottom: 6rem;
+    line-height: 1.5;
+    color: var(--color-text-white); 
+    font-family: var(--font-dmsans);
+}
+
+.whiteText {
+    color: var(--color-text-white); 
+}
+
+.redText {
+    color: var(--color-primary); 
+}
+
+.buttonContainer {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.button {
+    padding: 0.8rem 1.5rem;
+    text-decoration: none;
+    font-size: 1rem;
+    border-radius: 20px; 
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    font-family: var(--font-raleway); 
+    color: var(--color-text-white); 
+}
+
+.button.signup {
+    background-color: var(--color-primary); 
+}
+
+.button.signup:hover {
+    background-color: #cc0000;
+    transform: scale(1.05);
+}
+
+.button.login {
+    background-color: var(--color-darkgray); 
+}
+
+.button.login:hover {
+    background-color: #606060;
+    transform: scale(1.05); 
+}
