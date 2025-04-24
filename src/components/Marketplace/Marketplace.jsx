@@ -56,12 +56,6 @@ export const Marketplace = () => {
           >
             Create Listing
           </button>
-          <button
-            className={styles.filterBtn}
-            onClick={() => alert("Pressed!")}
-          >
-            All Filters
-          </button>
         </div>
       </div>
 
