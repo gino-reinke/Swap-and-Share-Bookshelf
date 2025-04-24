@@ -2,17 +2,24 @@
 
 .container {
   display: flex;
-  height: calc(100vh - 70px); /* leave space for Navbar */
-  background: #fff;
-  border: 1px solid #e0e0e0;
+  height: 70vh; /* shorter height */
   width: 50%;
-  margin: 0 auto;
+  margin: auto; /* horizontal centering */
+  background: #fff;
+  border: 1px solid var(--color-darkgray);
+
+  /* Vertically center the container within its parent */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
+
 
 /* ────────── Sidebar ────────── */
 .sidebar {
   width: 260px;
-  border-right: 1px solid #e0e0e0;
+  border-right: 1px solid var(--color-darkgray);
   padding: 0.75rem;
   display: flex;
   flex-direction: column;
@@ -64,13 +71,16 @@
 
 .messages {
   flex: 1;
+  display: flex;
+  flex-direction: column;
   padding: 1rem;
   overflow-y: auto;
+  align-items: flex-start; /* base alignment for receiver messages */
 }
 
 .myMsg,
 .theirMsg {
-  max-width: 70%;
+  max-width: 55%; /* reduce width */
   padding: 0.6rem 0.9rem;
   margin-bottom: 0.4rem;
   border-radius: 16px;
@@ -79,27 +89,41 @@
   word-break: break-word;
 }
 
+/* Hug the right side */
 .myMsg {
   align-self: flex-end;
   background: var(--color-primary);
   color: white;
+  max-width: 55%;
+  padding: 0.6rem 0.9rem;
+  margin-bottom: 0.4rem;
+  border-radius: 16px;
+  font-size: 0.9rem;
+  line-height: 1.3;
+  word-break: break-word;
 }
 
+/* Hug the left side */
 .theirMsg {
   align-self: flex-start;
   background: #f0f0f0;
   color: #222;
+  margin-left: 0; /* optional */
 }
 
 .inputBar {
   display: flex;
-  padding: 0.6rem;
+  align-items: center; /* vertically center contents */
+  justify-content: center;
+  padding: 0.4rem; /* shorter height */
   border-top: 1px solid #e0e0e0;
+  height: 48px; /* make the bar shorter */
 }
 
 .input {
-  flex: 1;
-  padding: 0.55rem 0.8rem;
+  width: 80%;
+  height: 75%; /* match sendBtn height */
+  padding: 0.4rem 0.8rem;
   font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 18px;
@@ -107,8 +131,9 @@
 }
 
 .sendBtn {
+  width: 20%;
+  height: 100%; /* match input height */
   margin-left: 0.6rem;
-  padding: 0 1.3rem;
   border: none;
   background: #d32f2f;
   color: #fff;
