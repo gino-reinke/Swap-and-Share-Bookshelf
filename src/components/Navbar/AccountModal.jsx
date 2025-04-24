@@ -30,6 +30,7 @@ const AccountModal = ({ isOpen, onClose }) => {
         {currentUser ? (
           <>
             <button onClick={() => { navigate("/profile"); onClose(); }}>Account</button>
+            <button onClick={() => { navigate("/mylistings"); onClose(); }}>My Listings</button>
             <button onClick={handleSignOut}>Sign Out</button>
           </>
         ) : (

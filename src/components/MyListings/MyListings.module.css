@@ -1,0 +1,73 @@
+@import "../../vars.css";
+
+* {
+  font-family: var(--font-dmsans);
+}
+
+.container {
+  display: flex;
+  flex-direction: column; /* Ensures content stacks vertically */
+  align-items: center;
+  padding: 20px;
+  background: #FFFFFF;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.title {
+  font-size: 40px;
+  font-weight: bold;
+  margin-right: 20px;
+  font-family: var(--font-raleway);
+}
+
+.buttonContainer {
+  display: flex;
+  gap: 15px; /* Ensures spacing between buttons */
+}
+
+.exploreBtn, .filterBtn {
+  width: 150px;
+  padding: 10px 15px;
+  border-radius: 20px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.exploreBtn {
+  background-color: #D32F2F;
+  color: white;
+}
+
+.filterBtn {
+  background-color: white;
+  border: 1px solid #D32F2F;
+  color: #D32F2F;
+}
+
+.listingWrapper {
+  width: 100%; /* Ensures listings take full width */
+  margin-top: 20px; /* Space from the header */
+  display: flex;
+  justify-content: center; /* Centers the grid */
+}
+
+.listingGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 listings per row */
+  gap: 64px; /* Spacing between grid items */
+  max-width: 1200px; /* Keeps it from getting too wide */
+  width: 100%;
+  /* Force centering */
+  place-items: center; /* Aligns grid items */
+  justify-content: center; /* Centers the grid itself horizontally */
+}
