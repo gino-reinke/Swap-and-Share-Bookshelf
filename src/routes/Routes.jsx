@@ -7,15 +7,13 @@ import About from "../pages/AboutPage";
 import TradingTips from "../pages/TradingTipsPage";
 import Account from "../pages/AccountPage";
 import Messaging from "../pages/MessagingPage";
-import Landing from "../pages/LandingPage";
 
 
 const AppRoutes = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/home" element={<Home />} />
+        <Route path="/" element={<Home />} />
         <Route path="/signin" element={<Login />} />
         <Route path="/marketplace" element={<Marketplace />} />
         <Route path="/about" element={<About />} />

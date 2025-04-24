@@ -7,16 +7,16 @@ export const Landing = () => {
         <div className={styles.container}>
             <div className={styles.content}>
                 <h1 className={styles.title}>
-                    <span className={styles.whiteText}>Pass A Book,</span>
+                    <span className={styles.whiteText}>PASS A BOOK,</span>
                     <br />
-                    <span className={styles.redText}>Gain A Story</span>
+                    <span className={styles.redText}>GAIN A STORY</span>
                 </h1>
                 <div className={styles.buttonContainer}>
                     <Link to="/signup" className={`${styles.button} ${styles.signup}`}>
-                        Sign Up
+                        SIGN UP
                     </Link>
                     <Link to="/signin" className={`${styles.button} ${styles.login}`}>
-                        Login
+                        LOGIN
                     </Link>
                 </div>
             </div>
