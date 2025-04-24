@@ -207,7 +207,7 @@ export const Messaging = () => {
                 className={styles.input}
               />
               <button type="submit" className={styles.sendBtn}>
-                Send
+                SEND
               </button>
             </form>
           </>
