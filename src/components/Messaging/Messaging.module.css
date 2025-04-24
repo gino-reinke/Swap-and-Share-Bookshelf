@@ -1,8 +1,12 @@
+@import "../../vars.css";
+
 .container {
   display: flex;
   height: calc(100vh - 70px); /* leave space for Navbar */
   background: #fff;
   border: 1px solid #e0e0e0;
+  width: 50%;
+  margin: 0 auto;
 }
 
 /* ────────── Sidebar ────────── */
@@ -22,6 +26,10 @@
   color: #444;
 }
 
+.username {
+  color: black;
+}
+
 .conversationBtn {
   text-align: left;
   padding: 0.5rem 0.75rem;
@@ -30,7 +38,6 @@
   background: transparent;
   border-radius: 6px;
   cursor: pointer;
-  transition: background 0.15s;
 }
 
 .conversationBtn:hover {
@@ -74,8 +81,8 @@
 
 .myMsg {
   align-self: flex-end;
-  background: #d32f2f;
-  color: #fff;
+  background: var(--color-primary);
+  color: white;
 }
 
 .theirMsg {

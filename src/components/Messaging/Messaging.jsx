@@ -1,45 +1,59 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import styles from './Messaging.module.css';
 import { AuthContext } from '../../context/AuthContext';
-import { collection, doc, onSnapshot, orderBy, query, serverTimestamp, setDoc, addDoc, getDoc } from 'firebase/firestore';
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  onSnapshot,
+  orderBy,
+  query,
+  serverTimestamp,
+  setDoc,
+} from 'firebase/firestore';
 import { firestore } from '../../firebase';
 import { useLocation } from 'react-router-dom';
 
 /**
  * Conversation document shape
  * /conversations/{conversationId}
- *  └─ participants:  [uidA, uidB]     (array)
- *     lastMessage:   string
- *     updatedAt:     timestamp
+ *   └─ participants:  [uidA, uidB]
+ *      lastMessage:   string
+ *      updatedAt:     timestamp
  *
- * Messages are kept in a sub-collection:
+ * Messages live in a sub-collection:
  * /conversations/{conversationId}/messages/{messageId}
- *  └─ senderId, text, createdAt
+ *   └─ senderId, text, createdAt
  */
 
 export const Messaging = () => {
   const { currentUser } = useContext(AuthContext);
   const location = useLocation();
-  const [conversations, setConversations] = useState([]);          // left rail
-  const [activeConvId, setActiveConvId] = useState(null);          // id of selected conversation
-  const [messages, setMessages] = useState([]);                    // right pane
+
+  const [conversations, setConversations] = useState([]);
+  const [activeConvId, setActiveConvId] = useState(null);
+  const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
+
+  /*  uid → displayName cache so we only hit Firestore once per user  */
+  const [userNames, setUserNames] = useState({});
+
   const bottomRef = useRef(null);
 
-  /** ------------------------------------------------------------------
-   *  Utility – create deterministic conversationId for two users
-   * ------------------------------------------------------------------*/
+  /* -------------------------------------------------------------
+   * Util: deterministic conversation id for any 2 uids
+   * ----------------------------------------------------------- */
   const getConversationId = (uid1, uid2) =>
     [uid1, uid2].sort().join('_');
 
-  /** ------------------------------------------------------------------
-   *  1. Initialisation – if we were navigated here from “Message User”
-   * ------------------------------------------------------------------*/
+  /* -------------------------------------------------------------
+   * If we arrived via “Message User” button, open / create convo
+   * ----------------------------------------------------------- */
   useEffect(() => {
-    if (!location.state?.otherUserId || !currentUser) return;
+    if (!currentUser || !location.state?.otherUserId) return;
 
     const convId = getConversationId(currentUser.uid, location.state.otherUserId);
-    // If the conversation doc does NOT exist yet we create a stub so both users can see it
     const convRef = doc(firestore, 'conversations', convId);
 
     (async () => {
@@ -56,27 +70,19 @@ export const Messaging = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.state, currentUser]);
 
-  /** ------------------------------------------------------------------
-   *  2. Left-hand list – real-time listener for my conversations
-   * ------------------------------------------------------------------*/
+  /* -------------------------------------------------------------
+   * LEFT rail: listen to all my conversations
+   * ----------------------------------------------------------- */
   useEffect(() => {
     if (!currentUser) return;
 
-    const q = query(
-      collection(firestore, 'conversations'),
-      // simple local filter because Firestore array-contains-any limit is 10;
-      // use onSnapshot & filter client-side for unlimited list
-    );
-
+    const q = query(collection(firestore, 'conversations'));
     const unsub = onSnapshot(q, (snap) => {
       const convs = [];
       snap.forEach((d) => {
         const data = d.data();
-        if (data.participants.includes(currentUser.uid))
-          convs.push({ id: d.id, ...data });
+        if (data.participants.includes(currentUser.uid)) convs.push({ id: d.id, ...data });
       });
-
-      // newest on top
       convs.sort((a, b) => b.updatedAt?.seconds - a.updatedAt?.seconds);
       setConversations(convs);
     });
@@ -84,9 +90,9 @@ export const Messaging = () => {
     return unsub;
   }, [currentUser]);
 
-  /** ------------------------------------------------------------------
-   *  3. Right-hand pane – listener for messages in selected conversation
-   * ------------------------------------------------------------------*/
+  /* -------------------------------------------------------------
+   * RIGHT pane: listen to messages in selected conversation
+   * ----------------------------------------------------------- */
   useEffect(() => {
     if (!activeConvId) return setMessages([]);
 
@@ -94,72 +100,88 @@ export const Messaging = () => {
       collection(firestore, 'conversations', activeConvId, 'messages'),
       orderBy('createdAt')
     );
-
     const unsub = onSnapshot(q, (snap) => {
-      const msgs = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
-      setMessages(msgs);
-      // auto-scroll
+      setMessages(snap.docs.map((d) => ({ id: d.id, ...d.data() })));
       setTimeout(() => bottomRef.current?.scrollIntoView({ behavior: 'smooth' }), 100);
     });
 
     return unsub;
   }, [activeConvId]);
 
-  /** ------------------------------------------------------------------
-   *  4. Send a message
-   * ------------------------------------------------------------------*/
+  /* -------------------------------------------------------------
+   * Fetch a user’s displayName once, cache it in state
+   * ----------------------------------------------------------- */
+  const ensureDisplayName = async (uid) => {
+    if (userNames[uid] || uid === currentUser.uid) return;
+
+    try {
+      const userDoc = await getDoc(doc(firestore, 'users', uid)); // assumes “users” collection
+      if (userDoc.exists()) {
+        setUserNames((prev) => ({ ...prev, [uid]: userDoc.data().displayName }));
+      }
+    } catch (err) {
+      console.error('Could not fetch username:', err);
+    }
+  };
+
+  /* -------------------------------------------------------------
+   * Send message
+   * ----------------------------------------------------------- */
   const sendMessage = async (e) => {
     e.preventDefault();
-    if (!input.trim() || !currentUser || !activeConvId) return;
+    if (!input.trim() || !activeConvId) return;
 
-    const msg = {
+    const newMsg = {
       senderId: currentUser.uid,
       text: input.trim(),
       createdAt: serverTimestamp(),
     };
 
-    await addDoc(collection(firestore, 'conversations', activeConvId, 'messages'), msg);
-    // update convo summary
+    await addDoc(collection(firestore, 'conversations', activeConvId, 'messages'), newMsg);
     await setDoc(
       doc(firestore, 'conversations', activeConvId),
-      { lastMessage: msg.text, updatedAt: serverTimestamp() },
+      { lastMessage: newMsg.text, updatedAt: serverTimestamp() },
       { merge: true }
     );
-
     setInput('');
   };
 
-  /** ------------------------------------------------------------------
-   *  RENDER
-   * ------------------------------------------------------------------*/
-  const renderSidebarItem = (conv) => {
-    // show the OTHER participant’s username or id
+  /* -------------------------------------------------------------
+   * Render helpers
+   * ----------------------------------------------------------- */
+  const SidebarItem = ({ conv }) => {
     const otherId = conv.participants.find((p) => p !== currentUser.uid);
+    useEffect(() => { ensureDisplayName(otherId); }, [otherId]);
+
+    const display = userNames[otherId] ?? otherId;
+
     return (
       <button
-        key={conv.id}
-        className={`${styles.conversationBtn} ${conv.id === activeConvId ? styles.active : ''}`}
+        className={`${styles.conversationBtn} ${
+          activeConvId === conv.id ? styles.active : ''
+        }`}
         onClick={() => setActiveConvId(conv.id)}
       >
-        {otherId}
+        <strong className={styles.username}>{display}</strong>
         <span className={styles.preview}>{conv.lastMessage?.slice(0, 24)}</span>
       </button>
     );
   };
 
+  /* ------------------------------------------------------------- */
   return (
     <section className={styles.container}>
-      {/* ─────────────────── LEFT SIDEBAR ─────────────────── */}
+      {/* ─────── Sidebar ─────── */}
       <aside className={styles.sidebar}>
         <h3 className={styles.sidebarTitle}>Messages</h3>
         {conversations.length ? (
-          conversations.map(renderSidebarItem)
+          conversations.map((c) => <SidebarItem key={c.id} conv={c} />)
         ) : (
           <p className={styles.empty}>No conversations yet.</p>
         )}
       </aside>
 
-      {/* ─────────────────── CHAT PANE ─────────────────── */}
+      {/* ─────── Chat pane ─────── */}
       <main className={styles.chatPane}>
         {activeConvId ? (
           <>
@@ -167,7 +189,9 @@ export const Messaging = () => {
               {messages.map((m) => (
                 <div
                   key={m.id}
-                  className={m.senderId === currentUser.uid ? styles.myMsg : styles.theirMsg}
+                  className={
+                    m.senderId === currentUser.uid ? styles.myMsg : styles.theirMsg
+                  }
                 >
                   {m.text}
                 </div>
@@ -179,7 +203,7 @@ export const Messaging = () => {
               <input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Type a message..."
+                placeholder="Type a message…"
                 className={styles.input}
               />
               <button type="submit" className={styles.sendBtn}>
