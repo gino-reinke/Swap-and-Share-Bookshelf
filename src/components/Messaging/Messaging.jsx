@@ -161,7 +161,7 @@ export const Messaging = () => {
     <section className={styles.container}>
       {/* ─────── Sidebar ─────── */}
       <aside className={styles.sidebar}>
-        <h3 className={styles.sidebarTitle}>Messages</h3>
+        <h3 className={styles.sidebarTitle}>MESSAGES</h3>
         {conversations.length ? (
           conversations.map((c) => <SidebarItem key={c.id} conv={c} />)
         ) : (
