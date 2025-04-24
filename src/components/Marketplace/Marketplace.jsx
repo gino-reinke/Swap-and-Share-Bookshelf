@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { collection, getDocs } from "firebase/firestore";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { firestore } from "../../firebase";
 import styles from "./Marketplace.module.css";
 import CreateListingModal from "./CreateListingModal";
@@ -8,20 +9,34 @@ import Listing from "../Listing/Listing";
 export const Marketplace = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [listings, setListings] = useState([]);
+  const [currentUserId, setCurrentUserId] = useState(null);
 
+  /** Keep track of signed-in user */
   useEffect(() => {
-    fetchListings();
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setCurrentUserId(user ? user.uid : null);
+    });
+    return unsubscribe;
   }, []);
 
-  const fetchListings = async () => {
-    const querySnapshot = await getDocs(collection(firestore, "listings"));
-    const fetchedListings = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    setListings(fetchedListings);
+  /** Fetch listings not created by the signed-in user */
+  useEffect(() => {
+    if (currentUserId !== null) fetchListings(currentUserId);
+  }, [currentUserId]);
+
+  const fetchListings = async (uid) => {
+    const snapshot = await getDocs(collection(firestore, "listings"));
+    const marketplaceListings = snapshot.docs
+      .map((doc) => ({ id: doc.id, ...doc.data() }))
+      .filter((listing) => listing.userId !== uid); // exclude owner’s
+
+    setListings(marketplaceListings);
   };
 
   const handleCreateListing = () => {
     setIsModalOpen(false);
-    fetchListings(); // Refresh listings when a new one is created
+    if (currentUserId !== null) fetchListings(currentUserId); // refresh
   };
 
   return (
@@ -29,10 +44,16 @@ export const Marketplace = () => {
       <div className={styles.header}>
         <h1 className={styles.title}>MARKETPLACE</h1>
         <div className={styles.buttonContainer}>
-          <button className={styles.exploreBtn} onClick={() => setIsModalOpen(true)}>
+          <button
+            className={styles.exploreBtn}
+            onClick={() => setIsModalOpen(true)}
+          >
             Create Listing
           </button>
-          <button className={styles.filterBtn} onClick={() => alert("Pressed!")}>
+          <button
+            className={styles.filterBtn}
+            onClick={() => alert("Pressed!")}
+          >
             All Filters
           </button>
         </div>
@@ -46,10 +67,10 @@ export const Marketplace = () => {
         </div>
       </div>
 
-      <CreateListingModal 
-        isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
-        onCreate={handleCreateListing} 
+      <CreateListingModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onCreate={handleCreateListing}
       />
     </section>
   );

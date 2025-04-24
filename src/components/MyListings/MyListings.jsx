@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { collection, getDocs } from "firebase/firestore";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { firestore } from "../../firebase";
 import styles from "./MyListings.module.css";
 import CreateListingModal from "../Marketplace/CreateListingModal";
@@ -8,20 +9,34 @@ import Listing from "../Listing/Listing";
 export const MyListings = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [listings, setListings] = useState([]);
+  const [currentUserId, setCurrentUserId] = useState(null);
 
+  /** Watch auth state so always have the right user id */
   useEffect(() => {
-    fetchListings();
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setCurrentUserId(user ? user.uid : null);
+    });
+    return unsubscribe; // clean up listener on unmount
   }, []);
 
-  const fetchListings = async () => {
-    const querySnapshot = await getDocs(collection(firestore, "listings"));
-    const fetchedListings = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    setListings(fetchedListings);
+  /** Fetch the user’s own listings whenever user or modal changes */
+  useEffect(() => {
+    if (currentUserId) fetchListings(currentUserId);
+  }, [currentUserId]);
+
+  const fetchListings = async (uid) => {
+    const snapshot = await getDocs(collection(firestore, "listings"));
+    const userListings = snapshot.docs          // all docs…
+      .map((doc) => ({ id: doc.id, ...doc.data() })) // …to objects
+      .filter((listing) => listing.userId === uid); // keep the owner’s
+
+    setListings(userListings);
   };
 
   const handleCreateListing = () => {
     setIsModalOpen(false);
-    fetchListings(); // Refresh listings when a new one is created
+    if (currentUserId) fetchListings(currentUserId); // refresh list
   };
 
   return (
@@ -29,7 +44,10 @@ export const MyListings = () => {
       <div className={styles.header}>
         <h1 className={styles.title}>MY LISTINGS</h1>
         <div className={styles.buttonContainer}>
-          <button className={styles.exploreBtn} onClick={() => setIsModalOpen(true)}>
+          <button
+            className={styles.exploreBtn}
+            onClick={() => setIsModalOpen(true)}
+          >
             Create Listing
           </button>
         </div>
@@ -43,10 +61,10 @@ export const MyListings = () => {
         </div>
       </div>
 
-      <CreateListingModal 
-        isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
-        onCreate={handleCreateListing} 
+      <CreateListingModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onCreate={handleCreateListing}
       />
     </section>
   );
