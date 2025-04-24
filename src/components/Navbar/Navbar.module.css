@@ -62,6 +62,9 @@
   height: 30px; /* Ensure all icons have the same height */
 }
 
+.menuItems a.activeLink{
+  color: #D32F2F !important;
+}
 
   @media screen and (max-width: 830px) {
     .navbar {

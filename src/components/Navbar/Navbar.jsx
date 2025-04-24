@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
 import styles from "./Navbar.module.css";
 import { getImageUrl } from "../../utils";
@@ -18,6 +19,11 @@ export const Navbar = () => {
   const searchWrapperRef = useRef(null);
   const inputRef = useRef(null);
   const { currentUser } = useContext(AuthContext);
+
+  // Use the useLocation hook to get the current path
+  const location = useLocation();
+  console.log("Current Path:", location.pathname);
+
 
   // Debounced search
   useEffect(() => {
@@ -96,9 +102,30 @@ export const Navbar = () => {
             className={`${styles.menuItems} ${menuOpen && styles.menuOpen}`}
             onClick={() => setMenuOpen(false)}
           >
-            <li><Link to="/marketplace">Marketplace</Link></li>
-            <li><Link to="/tradingtips">Trading Tips</Link></li>
-            <li><Link to="/about">About</Link></li>
+            <li>
+              <Link
+                to="/marketplace"
+                className={location.pathname === "/marketplace" ? styles.activeLink : ""}
+              >
+                Marketplace
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/tradingtips"
+                className={location.pathname === "/tradingtips" ? styles.activeLink : ""}
+              >
+                Trading Tips
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/about"
+                className={location.pathname === "/about" ? styles.activeLink : ""}
+              >
+                About
+              </Link>
+            </li>
 
             {/* 🔍 Search input and dropdown */}
             <li style={{ position: "relative" }} ref={searchWrapperRef}>
