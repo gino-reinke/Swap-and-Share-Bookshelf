@@ -1,26 +1,35 @@
 import React, { useState } from 'react';
 import styles from './Account.module.css';
+import { sendPasswordResetEmail } from 'firebase/auth';
+import { auth } from '../../firebase'; 
+import { handleLogout } from '../../services/authservice'; 
+import { useNavigate } from 'react-router-dom';
 
 export const Account = () => {
     const [activeTab, setActiveTab] = useState('username');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalAction, setModalAction] = useState('');
+    const navigate = useNavigate();
 
     const handleSaveClick = (action) => {
         setModalAction(action);
         setIsModalOpen(true);
     };
 
-    const confirmAction = () => {
+    const confirmAction = async () => {
         if (modalAction === 'logout') {
-            // Handle logout logic here
-            console.log('User logged out');
+            try {
+                await handleLogout();
+                alert('You have been logged out.');
+                navigate('/'); // Redirect to home
+            } catch (error) {
+                alert(error.message);
+            }
         } else {
-            // Handle save logic for username/password here
             console.log(`Changes saved for ${modalAction}`);
         }
         setIsModalOpen(false);
-    };
+    };    
 
     const cancelAction = () => {
         setIsModalOpen(false);
@@ -33,15 +42,23 @@ export const Account = () => {
                     <div className={styles.tabContent}>
                         <h2>Change Password</h2>
                         <form>
-                            <label htmlFor="currentPassword">Current Password:</label>
-                            <input type="password" id="currentPassword" name="currentPassword" placeholder="Enter current password" />
-                            <label htmlFor="newPassword">New Password:</label>
-                            <input type="password" id="newPassword" name="newPassword" placeholder="Enter new password" />
                             <button
                                 type="button"
-                                onClick={() => handleSaveClick('password')}
+                                onClick={async () => {
+                                    const user = auth.currentUser;
+                                    if (user && user.email) {
+                                        try {
+                                            await sendPasswordResetEmail(auth, user.email);
+                                            alert('Password reset email sent to ' + user.email);
+                                        } catch (error) {
+                                            alert('Error sending password reset email: ' + error.message);
+                                        }
+                                    } else {
+                                        alert('No authenticated user found.');
+                                    }
+                                }}
                             >
-                                Save
+                                Send Password Reset Email
                             </button>
                         </form>
                     </div>

@@ -93,6 +93,18 @@ export const handleLogin = async (email, password) => {
       throw new Error(mapAuthError(err));
     }
   };
+
+// logout
+export const handleLogout = async () => {
+  try {
+    await signOut(auth);
+    console.log('User signed out');
+  } catch (error) {
+    console.error('Logout failed:', error);
+    throw new Error('Failed to log out. Please try again.');
+  }
+};
+
   
   /* ------------------------------------------------------------------ */
   /*  Sign up (creates matching Firestore user document)                 */

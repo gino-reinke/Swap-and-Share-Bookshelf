@@ -13,10 +13,10 @@ const AccountModal = ({ isOpen, onClose }) => {
 
   const handleSignOut = async () => {
     try {
+      navigate("/"); // Redirect to home
       await signOut(auth);
       alert("Signed out");
       onClose(); // Close modal after signing out
-      navigate("/"); // Redirect to home
     } catch (error) {
       console.error("Error signing out:", error);
       alert("Sign-out failed. Try again.");
