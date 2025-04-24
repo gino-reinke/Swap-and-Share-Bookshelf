@@ -62,8 +62,8 @@
   height: 30px; /* Ensure all icons have the same height */
 }
 
-.activeLink{
-  color: var(--color-red);
+.menuItems a.activeLink{
+  color: red !important;
 }
 
   @media screen and (max-width: 830px) {

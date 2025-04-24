@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
-import { Link, useLocation } from "react-router-dom";  // Import useLocation
+import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
 import styles from "./Navbar.module.css";
 import { getImageUrl } from "../../utils";
@@ -21,6 +22,8 @@ export const Navbar = () => {
 
   // Use the useLocation hook to get the current path
   const location = useLocation();
+  console.log("Current Path:", location.pathname);
+
 
   // Debounced search
   useEffect(() => {
