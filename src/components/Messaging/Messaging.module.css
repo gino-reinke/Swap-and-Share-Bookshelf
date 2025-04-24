@@ -1,4 +1,118 @@
 .container {
   display: flex;
+  height: calc(100vh - 70px); /* leave space for Navbar */
+  background: #fff;
+  border: 1px solid #e0e0e0;
+}
 
+/* ────────── Sidebar ────────── */
+.sidebar {
+  width: 260px;
+  border-right: 1px solid #e0e0e0;
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.sidebarTitle {
+  margin: 0 0 0.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #444;
+}
+
+.conversationBtn {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 4px;
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.conversationBtn:hover {
+  background: #f6f6f6;
+}
+
+.active {
+  background: #eceff1;
+}
+
+.preview {
+  display: block;
+  font-size: 0.75rem;
+  color: #777;
+}
+
+/* ────────── Chat pane ────────── */
+.chatPane {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.messages {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+.myMsg,
+.theirMsg {
+  max-width: 70%;
+  padding: 0.6rem 0.9rem;
+  margin-bottom: 0.4rem;
+  border-radius: 16px;
+  font-size: 0.9rem;
+  line-height: 1.3;
+  word-break: break-word;
+}
+
+.myMsg {
+  align-self: flex-end;
+  background: #d32f2f;
+  color: #fff;
+}
+
+.theirMsg {
+  align-self: flex-start;
+  background: #f0f0f0;
+  color: #222;
+}
+
+.inputBar {
+  display: flex;
+  padding: 0.6rem;
+  border-top: 1px solid #e0e0e0;
+}
+
+.input {
+  flex: 1;
+  padding: 0.55rem 0.8rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 18px;
+  outline: none;
+}
+
+.sendBtn {
+  margin-left: 0.6rem;
+  padding: 0 1.3rem;
+  border: none;
+  background: #d32f2f;
+  color: #fff;
+  font-weight: 600;
+  border-radius: 18px;
+  cursor: pointer;
+}
+
+.empty,
+.prompt {
+  margin: auto;
+  color: #aaa;
+  text-align: center;
 }
