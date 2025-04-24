@@ -28,22 +28,6 @@ export const Account = () => {
 
     const renderTabContent = () => {
         switch (activeTab) {
-            case 'username':
-                return (
-                    <div className={styles.tabContent}>
-                        <h2>Change Username</h2>
-                        <form>
-                            <label htmlFor="username">New Username:</label>
-                            <input type="text" id="username" name="username" placeholder="Enter new username" />
-                            <button
-                                type="button"
-                                onClick={() => handleSaveClick('username')}
-                            >
-                                Save
-                            </button>
-                        </form>
-                    </div>
-                );
             case 'password':
                 return (
                     <div className={styles.tabContent}>
@@ -59,22 +43,6 @@ export const Account = () => {
                             >
                                 Save
                             </button>
-                        </form>
-                    </div>
-                );
-            case 'preferences':
-                return (
-                    <div className={styles.tabContent}>
-                        <h2>Preferences</h2>
-                        <form>
-                            <label>
-                                <input type="checkbox" name="emailNotifications" />
-                                Enable Email Notifications
-                            </label>
-                            <label>
-                                <input type="checkbox" name="darkMode" />
-                                Enable Dark Mode
-                            </label>
                         </form>
                     </div>
                 );
@@ -100,22 +68,10 @@ export const Account = () => {
         <section className={styles.container}>
             <div className={styles.tabs}>
                 <button
-                    className={`${styles.tabButton} ${activeTab === 'username' ? styles.active : ''}`}
-                    onClick={() => setActiveTab('username')}
-                >
-                    Change Username
-                </button>
-                <button
                     className={`${styles.tabButton} ${activeTab === 'password' ? styles.active : ''}`}
                     onClick={() => setActiveTab('password')}
                 >
                     Change Password
-                </button>
-                <button
-                    className={`${styles.tabButton} ${activeTab === 'preferences' ? styles.active : ''}`}
-                    onClick={() => setActiveTab('preferences')}
-                >
-                    Preferences
                 </button>
                 <button
                     className={`${styles.tabButton} ${activeTab === 'logout' ? styles.active : ''}`}
