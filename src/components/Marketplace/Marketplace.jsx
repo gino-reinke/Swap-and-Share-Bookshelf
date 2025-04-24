@@ -9,34 +9,40 @@ import Listing from "../Listing/Listing";
 export const Marketplace = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [listings, setListings] = useState([]);
-  const [currentUserId, setCurrentUserId] = useState(null);
+  const [currentUserId, setCurrentUserId] = useState(undefined); // undefined → auth not resolved yet
 
   /** Keep track of signed-in user */
   useEffect(() => {
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setCurrentUserId(user ? user.uid : null);
+      setCurrentUserId(user ? user.uid : null); // null → not signed-in
     });
     return unsubscribe;
   }, []);
 
-  /** Fetch listings not created by the signed-in user */
+  /* Fetch (or refetch) whenever auth state changes */
   useEffect(() => {
-    if (currentUserId !== null) fetchListings(currentUserId);
+    // If currentUserId is undefined we’re still waiting; otherwise fetch
+    if (currentUserId !== undefined) fetchListings(currentUserId);
   }, [currentUserId]);
 
   const fetchListings = async (uid) => {
     const snapshot = await getDocs(collection(firestore, "listings"));
-    const marketplaceListings = snapshot.docs
-      .map((doc) => ({ id: doc.id, ...doc.data() }))
-      .filter((listing) => listing.userId !== uid); // exclude owner’s
+    let allListings = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 
-    setListings(marketplaceListings);
+    // If a user is signed in, remove their own listings.  
+    // If uid is null (not signed in) we keep everything.
+    if (uid) {
+      allListings = allListings.filter((listing) => listing.userId !== uid);
+    }
+
+    setListings(allListings);
   };
 
   const handleCreateListing = () => {
     setIsModalOpen(false);
-    if (currentUserId !== null) fetchListings(currentUserId); // refresh
+    // Refresh after a new listing is added
+    if (currentUserId !== undefined) fetchListings(currentUserId);
   };
 
   return (
