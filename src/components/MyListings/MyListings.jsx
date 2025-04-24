@@ -2,53 +2,47 @@ import React, { useState, useEffect } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { firestore } from "../../firebase";
-import styles from "./Marketplace.module.css";
-import CreateListingModal from "./CreateListingModal";
+import styles from "./MyListings.module.css";
+import CreateListingModal from "../Marketplace/CreateListingModal";
 import Listing from "../Listing/Listing";
 
-export const Marketplace = () => {
+export const MyListings = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [listings, setListings] = useState([]);
-  const [currentUserId, setCurrentUserId] = useState(undefined); // undefined → auth not resolved yet
+  const [currentUserId, setCurrentUserId] = useState(null);
 
-  /** Keep track of signed-in user */
+  /** Watch auth state so always have the right user id */
   useEffect(() => {
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setCurrentUserId(user ? user.uid : null); // null → not signed-in
+      setCurrentUserId(user ? user.uid : null);
     });
-    return unsubscribe;
+    return unsubscribe; // clean up listener on unmount
   }, []);
 
-  /* Fetch (or refetch) whenever auth state changes */
+  /** Fetch the user’s own listings whenever user or modal changes */
   useEffect(() => {
-    // If currentUserId is undefined we’re still waiting; otherwise fetch
-    if (currentUserId !== undefined) fetchListings(currentUserId);
+    if (currentUserId) fetchListings(currentUserId);
   }, [currentUserId]);
 
   const fetchListings = async (uid) => {
     const snapshot = await getDocs(collection(firestore, "listings"));
-    let allListings = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    const userListings = snapshot.docs          // all docs…
+      .map((doc) => ({ id: doc.id, ...doc.data() })) // …to objects
+      .filter((listing) => listing.userId === uid); // keep the owner’s
 
-    // If a user is signed in, remove their own listings.  
-    // If uid is null (not signed in) we keep everything.
-    if (uid) {
-      allListings = allListings.filter((listing) => listing.userId !== uid);
-    }
-
-    setListings(allListings);
+    setListings(userListings);
   };
 
   const handleCreateListing = () => {
     setIsModalOpen(false);
-    // Refresh after a new listing is added
-    if (currentUserId !== undefined) fetchListings(currentUserId);
+    if (currentUserId) fetchListings(currentUserId); // refresh list
   };
 
   return (
     <section className={styles.container}>
       <div className={styles.header}>
-        <h1 className={styles.title}>MARKETPLACE</h1>
+        <h1 className={styles.title}>MY LISTINGS</h1>
         <div className={styles.buttonContainer}>
           <button
             className={styles.exploreBtn}
@@ -76,4 +70,4 @@ export const Marketplace = () => {
   );
 };
 
-export default Marketplace;
+export default MyListings;

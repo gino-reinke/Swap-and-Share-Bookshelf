@@ -1,26 +1,35 @@
 import React, { useState } from 'react';
 import styles from './Account.module.css';
+import { sendPasswordResetEmail } from 'firebase/auth';
+import { auth } from '../../firebase'; 
+import { handleLogout } from '../../services/authservice'; 
+import { useNavigate } from 'react-router-dom';
 
 export const Account = () => {
     const [activeTab, setActiveTab] = useState('username');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalAction, setModalAction] = useState('');
+    const navigate = useNavigate();
 
     const handleSaveClick = (action) => {
         setModalAction(action);
         setIsModalOpen(true);
     };
 
-    const confirmAction = () => {
+    const confirmAction = async () => {
         if (modalAction === 'logout') {
-            // Handle logout logic here
-            console.log('User logged out');
+            try {
+                await handleLogout();
+                alert('You have been logged out.');
+                navigate('/'); // Redirect to home
+            } catch (error) {
+                alert(error.message);
+            }
         } else {
-            // Handle save logic for username/password here
             console.log(`Changes saved for ${modalAction}`);
         }
         setIsModalOpen(false);
-    };
+    };    
 
     const cancelAction = () => {
         setIsModalOpen(false);
@@ -28,53 +37,29 @@ export const Account = () => {
 
     const renderTabContent = () => {
         switch (activeTab) {
-            case 'username':
-                return (
-                    <div className={styles.tabContent}>
-                        <h2>Change Username</h2>
-                        <form>
-                            <label htmlFor="username">New Username:</label>
-                            <input type="text" id="username" name="username" placeholder="Enter new username" />
-                            <button
-                                type="button"
-                                onClick={() => handleSaveClick('username')}
-                            >
-                                Save
-                            </button>
-                        </form>
-                    </div>
-                );
             case 'password':
                 return (
                     <div className={styles.tabContent}>
                         <h2>Change Password</h2>
                         <form>
-                            <label htmlFor="currentPassword">Current Password:</label>
-                            <input type="password" id="currentPassword" name="currentPassword" placeholder="Enter current password" />
-                            <label htmlFor="newPassword">New Password:</label>
-                            <input type="password" id="newPassword" name="newPassword" placeholder="Enter new password" />
                             <button
                                 type="button"
-                                onClick={() => handleSaveClick('password')}
+                                onClick={async () => {
+                                    const user = auth.currentUser;
+                                    if (user && user.email) {
+                                        try {
+                                            await sendPasswordResetEmail(auth, user.email);
+                                            alert('Password reset email sent to ' + user.email);
+                                        } catch (error) {
+                                            alert('Error sending password reset email: ' + error.message);
+                                        }
+                                    } else {
+                                        alert('No authenticated user found.');
+                                    }
+                                }}
                             >
-                                Save
+                                Send Password Reset Email
                             </button>
-                        </form>
-                    </div>
-                );
-            case 'preferences':
-                return (
-                    <div className={styles.tabContent}>
-                        <h2>Preferences</h2>
-                        <form>
-                            <label>
-                                <input type="checkbox" name="emailNotifications" />
-                                Enable Email Notifications
-                            </label>
-                            <label>
-                                <input type="checkbox" name="darkMode" />
-                                Enable Dark Mode
-                            </label>
                         </form>
                     </div>
                 );
@@ -100,22 +85,10 @@ export const Account = () => {
         <section className={styles.container}>
             <div className={styles.tabs}>
                 <button
-                    className={`${styles.tabButton} ${activeTab === 'username' ? styles.active : ''}`}
-                    onClick={() => setActiveTab('username')}
-                >
-                    Change Username
-                </button>
-                <button
                     className={`${styles.tabButton} ${activeTab === 'password' ? styles.active : ''}`}
                     onClick={() => setActiveTab('password')}
                 >
                     Change Password
-                </button>
-                <button
-                    className={`${styles.tabButton} ${activeTab === 'preferences' ? styles.active : ''}`}
-                    onClick={() => setActiveTab('preferences')}
-                >
-                    Preferences
                 </button>
                 <button
                     className={`${styles.tabButton} ${activeTab === 'logout' ? styles.active : ''}`}

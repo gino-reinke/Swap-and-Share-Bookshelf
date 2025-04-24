@@ -167,18 +167,30 @@ export const Navbar = () => {
             </li>
 
             <li className={styles.icons}>
-              <img
-                src={getImageUrl("nav/heart.svg")}
-                alt="heart"
-                className={styles.icon}
-              />
-              <Link to="/messaging">
-                <img
-                  src={getImageUrl("nav/inbox.svg")}
-                  alt="inbox"
-                  className={styles.icon}
-                />
-              </Link>
+            <img
+              src={getImageUrl("nav/heart.svg")}
+              alt="heart"
+              className={styles.icon}
+              onClick={() => {
+                if (currentUser) {
+                  window.location.href = "/favorites";
+                } else {
+                  window.location.href = "/signin";
+                }
+              }}
+            />
+            <img
+              src={getImageUrl("nav/inbox.svg")}
+              alt="inbox"
+              className={styles.icon}
+              onClick={() => {
+                if (currentUser) {
+                  window.location.href = "/messaging";
+                } else {
+                  window.location.href = "/signin";
+                }
+              }}
+            />
               <img
                 src={getImageUrl("nav/account.svg")}
                 alt="account"
