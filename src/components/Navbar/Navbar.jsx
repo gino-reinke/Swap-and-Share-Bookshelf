@@ -167,11 +167,13 @@ export const Navbar = () => {
             </li>
 
             <li className={styles.icons}>
-              <img
-                src={getImageUrl("nav/heart.svg")}
-                alt="heart"
-                className={styles.icon}
-              />
+              <Link to="/favorites">
+                <img
+                  src={getImageUrl("nav/heart.svg")}
+                  alt="heart"
+                  className={styles.icon}
+                />
+              </Link>
               <Link to="/messaging">
                 <img
                   src={getImageUrl("nav/inbox.svg")}
