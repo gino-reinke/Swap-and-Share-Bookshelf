@@ -1,9 +1,4 @@
-html, body {
-    margin: 0; 
-    padding: 0; 
-    height: 100%; 
-
-}
+@import "../../vars.css";
 
 .container {
     background: url('/assets/Home/Home.png') no-repeat center center;

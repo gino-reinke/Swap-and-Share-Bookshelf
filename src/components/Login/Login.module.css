@@ -11,6 +11,7 @@
   margin-right: 10%;
   flex-direction: row; /* Maintain row format for larger screens */
   gap: 50px; /* Adds spacing between image and form */
+  margin-bottom: 564px;
 }
 
 .content {
