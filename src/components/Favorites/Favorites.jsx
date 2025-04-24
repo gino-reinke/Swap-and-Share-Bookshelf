@@ -19,7 +19,7 @@ export const Favorites = () => {
   const [listings, setListings] = useState([]);
 
   /* --------------------------------------------- */
-  /*  Grab the user’s favourite listing documents  */
+  /*  Grab the user’s favorite listing documents  */
   /* --------------------------------------------- */
   useEffect(() => {
     fetchFavoriteListings();
@@ -30,7 +30,7 @@ export const Favorites = () => {
     const user = auth.currentUser;
     if (!user) return;
 
-    // 1. pull favourite IDs from user document
+    // 1. pull favorite IDs from user document
     const userRef = doc(firestore, "users", user.uid);
     const userSnap = await getDoc(userRef);
     const favIds = userSnap.data()?.favorites || [];

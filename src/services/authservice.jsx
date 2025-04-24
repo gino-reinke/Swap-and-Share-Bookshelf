@@ -82,7 +82,7 @@ export const handleLogin = async (email, password) => {
           favorites: [],
         });
       } else if (!Array.isArray(snap.data().favorites)) {
-        // document exists but favourites missing
+        // document exists but favorites missing
         await updateDoc(userRef, { favorites: [] });
       }
   
@@ -111,7 +111,7 @@ export const handleLogin = async (email, password) => {
       // 2. Add display name
       await updateProfile(user, { displayName: username });
   
-      // 3. Create Firestore user profile (incl. empty favourites array)
+      // 3. Create Firestore user profile (incl. empty favorites array)
       await setDoc(doc(firestore, "users", user.uid), {
         email,
         username,

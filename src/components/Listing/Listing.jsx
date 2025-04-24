@@ -39,12 +39,12 @@ const Listing = ({ listing }) => {
   }, [id]);
 
   /* ------------------------------------------- */
-  /*  Add-or-remove the listing from favourites  */
+  /*  Add-or-remove the listing from favorites  */
   /* ------------------------------------------- */
   const toggleFavorite = async () => {
     const user = auth.currentUser;
     if (!user) {
-      alert("Please sign in to use favourites.");
+      alert("Please sign in to use favorites.");
       return;
     }
 
@@ -58,7 +58,7 @@ const Listing = ({ listing }) => {
       }
       setIsFavorite(!isFavorite);
     } catch (err) {
-      console.error("Unable to update favourites:", err);
+      console.error("Unable to update favorites:", err);
     }
   };
 
@@ -82,7 +82,7 @@ const Listing = ({ listing }) => {
                 isFavorite ? "listing/heart-filled.png" : "listing/heart.png"
               )}
               className={styles.favoriteIcon}
-              alt="Favourite toggle"
+              alt="Favorite toggle"
               onClick={toggleFavorite}
             />
           </div>
