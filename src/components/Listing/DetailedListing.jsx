@@ -38,11 +38,25 @@ const DetailedListing = ({ listing, onClose }) => {
             {!isCurrentUserOwner && currentUser && (
               <button
                 className={styles.messageBtn}
-                onClick={() =>
-                  navigate('/messaging', {
-                    state: { otherUserId: userId, otherUsername: username },
-                  })
-                }
+                 onClick={() =>
+                     navigate('/messaging', {
+                       state: {
+                         otherUserId: userId,
+                         otherUsername: username,
+                         /* NEW ➜ everything Messaging needs to show the card */
+                         listing: {
+                           title,
+                           author,
+                           genre,
+                           isbn,
+                           condition,
+                           location: `${city}, ${state}`,
+                           description,
+                           image,
+                         },
+                       },
+                     })
+                   }
               >
                 Message User
               </button>
