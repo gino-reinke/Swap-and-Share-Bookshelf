@@ -1,4 +1,152 @@
+@import "../../vars.css";
+
 .container {
   display: flex;
+  height: 70vh; /* shorter height */
+  width: 50%;
+  margin: auto; /* horizontal centering */
+  background: #fff;
+  border: 1px solid var(--color-darkgray);
+  border-radius: 8px;
 
+  /* Vertically center the container within its parent */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+
+/* ────────── Sidebar ────────── */
+.sidebar {
+  width: 260px;
+  border-right: 1px solid var(--color-darkgray);
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.sidebarTitle {
+  margin: 0 0 0.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #444;
+}
+
+.username {
+  color: black;
+}
+
+.conversationBtn {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 4px;
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.conversationBtn:hover {
+  background: #f6f6f6;
+}
+
+.active {
+  background: #eceff1;
+}
+
+.preview {
+  display: block;
+  font-size: 0.75rem;
+  color: #777;
+}
+
+/* ────────── Chat pane ────────── */
+.chatPane {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.messages {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  overflow-y: auto;
+  align-items: flex-start; /* base alignment for receiver messages */
+}
+
+.myMsg,
+.theirMsg {
+  max-width: 55%; /* reduce width */
+  padding: 0.6rem 0.9rem;
+  margin-bottom: 0.4rem;
+  border-radius: 16px;
+  font-size: 0.9rem;
+  line-height: 1.3;
+  word-break: break-word;
+}
+
+/* Hug the right side */
+.myMsg {
+  align-self: flex-end;
+  background: var(--color-primary);
+  color: white;
+  max-width: 55%;
+  padding: 0.6rem 0.9rem;
+  margin-bottom: 0.4rem;
+  border-radius: 16px;
+  font-size: 0.9rem;
+  line-height: 1.3;
+  word-break: break-word;
+}
+
+/* Hug the left side */
+.theirMsg {
+  align-self: flex-start;
+  background: #f0f0f0;
+  color: #222;
+  margin-left: 0; /* optional */
+}
+
+.inputBar {
+  display: flex;
+  align-items: center; /* vertically center contents */
+  justify-content: center;
+  padding: 0.4rem; /* shorter height */
+  border-top: 1px solid #e0e0e0;
+  height: 48px; /* make the bar shorter */
+}
+
+.input {
+  width: 80%;
+  height: 75%; /* match sendBtn height */
+  padding: 0.4rem 0.8rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 18px;
+  outline: none;
+}
+
+.sendBtn {
+  width: 20%;
+  height: 100%; /* match input height */
+  margin-left: 0.6rem;
+  border: none;
+  background: var(--color-primary);
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 18px;
+  cursor: pointer;
+}
+
+.empty,
+.prompt {
+  margin: auto;
+  color: #aaa;
+  text-align: center;
 }

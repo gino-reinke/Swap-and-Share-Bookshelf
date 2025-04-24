@@ -1,10 +1,12 @@
 import React, { useContext } from "react";
 import styles from "./DetailedListing.module.css";
 import { AuthContext } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const DetailedListing = ({ listing, onClose }) => {
   const { currentUser } = useContext(AuthContext);
   const { title, author, description, genre, isbn, condition, state, city, image, userId, username } = listing;
+  const navigate = useNavigate();
 
   const isCurrentUserOwner = currentUser && currentUser.uid === userId;
 
@@ -36,7 +38,11 @@ const DetailedListing = ({ listing, onClose }) => {
             {!isCurrentUserOwner && currentUser && (
               <button
                 className={styles.messageBtn}
-                onClick={() => alert(`Message button pressed for ${username}`)}
+                onClick={() =>
+                  navigate('/messaging', {
+                    state: { otherUserId: userId, otherUsername: username },
+                  })
+                }
               >
                 Message User
               </button>
