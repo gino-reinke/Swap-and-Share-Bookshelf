@@ -2,15 +2,15 @@ html, body {
     margin: 0; 
     padding: 0; 
     height: 100%; 
-    overflow: hidden; 
+
 }
 
 .container {
-    background: url('/assets/Home/Home.png') no-repeat center center fixed;
+    background: url('/assets/Home/Home.png') no-repeat center center;
     background-size: cover;
     height: 100vh; 
     display: flex;
-    justify-content: center;
+    justify-content: flex-start; /* changed from center */
     align-items: center;
     color: var(--color-text-white); 
     text-align: center;
@@ -20,8 +20,8 @@ html, body {
 .content {
     padding: 2rem;
     border-radius: 10px; 
-    box-shadow: none; 
-    margin-left: 6in;
+    margin-left: auto;
+    margin-right: 40rem;
     transform: translateY(-2.2in);
 }
 
@@ -36,15 +36,21 @@ html, body {
 
 .whiteText {
     color: var(--color-text-white); 
+    font-family: var(--font-raleway);
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    font-size: 72px;
 }
 
 .redText {
     color: var(--color-primary); 
+    font-family: var(--font-raleway);
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    font-size: 72px;
 }
 
 .buttonContainer {
     display: flex;
-    gap: 1rem;
+    gap: 4rem;
     justify-content: center;
 }
 
@@ -63,6 +69,10 @@ html, body {
 
 .button.signup {
     background-color: var(--color-primary); 
+    font-family: var(--font-raleway);
+    font-weight: 600;
+    font-size: 24px;
+    width: 100px;
 }
 
 .button.signup:hover {
@@ -72,6 +82,10 @@ html, body {
 
 .button.login {
     background-color: var(--color-darkgray); 
+    font-family: var(--font-raleway);
+    font-weight: 600;
+    font-size: 24px;
+    width: 100px;
 }
 
 .button.login:hover {
